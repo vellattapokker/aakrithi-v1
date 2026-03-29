@@ -24,4 +24,12 @@ if (isset($_SERVER['VERCEL_URL'])) {
     }
 }
 
+// Trace echos
+// echo "API Entry point reached.<br>";
+if (file_exists(__DIR__ . '/../public/index.php')) {
+    // echo "Found public/index.php.<br>";
+} else {
+    die("ERROR: public/index.php NOT FOUND at " . realpath(__DIR__ . '/../public/index.php'));
+}
+
 require __DIR__ . '/../public/index.php';
