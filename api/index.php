@@ -11,7 +11,12 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 if (isset($_SERVER['VERCEL_URL']) || isset($_ENV['VERCEL_URL'])) {
-    $cachePath = '/tmp/storage/bootstrap/cache/';
+    $storagePath = '/tmp/storage';
+    putenv("LARAVEL_STORAGE_PATH=$storagePath");
+    $_ENV['LARAVEL_STORAGE_PATH'] = $storagePath;
+    $_SERVER['LARAVEL_STORAGE_PATH'] = $storagePath;
+
+    $cachePath = $storagePath . '/bootstrap/cache/';
     $vars = [
         'APP_CONFIG_CACHE' => $cachePath . 'config.php',
         'APP_ROUTES_CACHE' => $cachePath . 'routes.php',
@@ -27,11 +32,11 @@ if (isset($_SERVER['VERCEL_URL']) || isset($_ENV['VERCEL_URL'])) {
     }
 
     $storage = [
-        '/tmp/storage/framework/cache/data',
-        '/tmp/storage/framework/sessions',
-        '/tmp/storage/framework/views',
-        '/tmp/storage/logs',
-        '/tmp/storage/bootstrap/cache'
+        $storagePath . '/framework/cache/data',
+        $storagePath . '/framework/sessions',
+        $storagePath . '/framework/views',
+        $storagePath . '/logs',
+        $storagePath . '/bootstrap/cache'
     ];
     foreach ($storage as $path) {
         if (!is_dir($path)) {

@@ -4,6 +4,16 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
+if (isset($_SERVER['VERCEL_URL']) || isset($_ENV['VERCEL_URL'])) {
+    $storagePath = '/tmp/storage';
+    if (!is_dir($storagePath . '/framework/views')) {
+        mkdir($storagePath . '/framework/views', 0755, true);
+    }
+    putenv("LARAVEL_STORAGE_PATH=$storagePath");
+    $_ENV['LARAVEL_STORAGE_PATH'] = $storagePath;
+    $_SERVER['LARAVEL_STORAGE_PATH'] = $storagePath;
+}
+
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
