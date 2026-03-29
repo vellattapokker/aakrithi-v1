@@ -19,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (isset($_SERVER['VERCEL_URL']) || isset($_ENV['VERCEL_URL'])) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
         require_once app_path('Helpers/settings.php');
     }
 }

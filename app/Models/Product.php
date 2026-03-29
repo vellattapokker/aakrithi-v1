@@ -24,4 +24,14 @@ class Product extends Model
     protected $casts = [
         'sizes' => 'array',
     ];
+
+    /**
+     * Get the product image as a root-relative path.
+     */
+    protected function image(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(
+            get: fn ($value) => str_replace('aakriti-laravel/public/', '', $value),
+        );
+    }
 }
