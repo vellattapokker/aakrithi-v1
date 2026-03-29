@@ -23,15 +23,6 @@ if (isset($_SERVER['VERCEL_URL'])) {
             mkdir($path, 0755, true);
         }
     }
-
-    // Redirect bootstrap/cache files to /tmp
-    putenv('APP_CONFIG_CACHE=/tmp/storage/bootstrap/cache/config.php');
-    putenv('APP_ROUTES_CACHE=/tmp/storage/bootstrap/cache/routes.php');
-    putenv('APP_SERVICES_CACHE=/tmp/storage/bootstrap/cache/services.php');
-    putenv('APP_PACKAGES_CACHE=/tmp/storage/bootstrap/cache/packages.php');
-    
-    // Force logging to stderr for Vercel
-    putenv('LOG_CHANNEL=stderr');
 }
 
 try {

@@ -19,6 +19,19 @@ return Application::configure(basePath: dirname(__DIR__))
     ->registered(function ($app) {
         if (isset($_SERVER['VERCEL_URL'])) {
             $app->useStoragePath('/tmp/storage');
+            $app->useBootstrapPath('/tmp/storage/bootstrap');
+            
+            // Re-register the package manifest to use the new writable path
+            $app->singleton(\Illuminate\Foundation\PackageManifest::class, function () use ($app) {
+                return new \Illuminate\Foundation\PackageManifest(
+                    new \Illuminate\Filesystem\Filesystem, 
+                    $app->basePath(), 
+                    $app->getCachedPackagesPath()
+                );
+            });
+
+            // Force logging to stderr for Vercel
+            config(['logging.default' => 'stderr']);
         }
     })
     ->create();
