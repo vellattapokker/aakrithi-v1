@@ -15,27 +15,27 @@ if (isset($_SERVER['VERCEL_URL'])) {
         '/tmp/storage/framework/cache',
         '/tmp/storage/framework/sessions',
         '/tmp/storage/framework/views',
-        '/tmp/storage/logs'
+        '/tmp/storage/logs',
+        '/tmp/storage/bootstrap/cache'
     ];
     foreach ($storage as $path) {
         if (!is_dir($path)) {
             mkdir($path, 0755, true);
         }
     }
-}
 
-// Trace echos
-// echo "API Entry point reached.<br>";
-if (file_exists(__DIR__ . '/../public/index.php')) {
-    // echo "Found public/index.php.<br>";
-} else {
-    die("ERROR: public/index.php NOT FOUND at " . realpath(__DIR__ . '/../public/index.php'));
+    // Redirect bootstrap/cache files to /tmp
+    putenv('APP_CONFIG_CACHE=/tmp/storage/bootstrap/cache/config.php');
+    putenv('APP_ROUTES_CACHE=/tmp/storage/bootstrap/cache/routes.php');
+    putenv('APP_SERVICES_CACHE=/tmp/storage/bootstrap/cache/services.php');
+    putenv('APP_PACKAGES_CACHE=/tmp/storage/bootstrap/cache/packages.php');
+    
+    // Force logging to stderr for Vercel
+    putenv('LOG_CHANNEL=stderr');
 }
 
 try {
-    echo "Attempting to require public/index.php...<br>";
     require __DIR__ . '/../public/index.php';
-    echo "Successfully required public/index.php.<br>";
 } catch (\Throwable $e) {
     echo "<h1>FATAL ERROR CAUGHT IN API ENTRY POINT</h1>";
     echo "<b>Error:</b> " . $e->getMessage() . "<br>";
@@ -43,5 +43,5 @@ try {
     echo "<b>Line:</b> " . $e->getLine() . "<br>";
     echo "<b>Trace:</b><pre>" . $e->getTraceAsString() . "</pre>";
     error_log($e);
-    die(); // Force output
+    die();
 }
