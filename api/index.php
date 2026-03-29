@@ -10,7 +10,22 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-if (isset($_SERVER['VERCEL_URL'])) {
+if (isset($_SERVER['VERCEL_URL']) || isset($_ENV['VERCEL_URL'])) {
+    $cachePath = '/tmp/storage/bootstrap/cache/';
+    $vars = [
+        'APP_CONFIG_CACHE' => $cachePath . 'config.php',
+        'APP_ROUTES_CACHE' => $cachePath . 'routes.php',
+        'APP_SERVICES_CACHE' => $cachePath . 'services.php',
+        'APP_PACKAGES_CACHE' => $cachePath . 'packages.php',
+        'LOG_CHANNEL' => 'stderr',
+    ];
+
+    foreach ($vars as $key => $value) {
+        putenv("$key=$value");
+        $_ENV[$key] = $value;
+        $_SERVER[$key] = $value;
+    }
+
     $storage = [
         '/tmp/storage/framework/cache',
         '/tmp/storage/framework/sessions',
