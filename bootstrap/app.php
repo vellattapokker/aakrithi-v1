@@ -31,7 +31,12 @@ return Application::configure(basePath: dirname(__DIR__))
             });
 
             // Force logging to stderr for Vercel
-            config(['logging.default' => 'stderr']);
+            config([
+                'logging.default' => 'stderr',
+                'view.compiled' => '/tmp/storage/framework/views',
+                'cache.stores.file.path' => '/tmp/storage/framework/cache/data',
+                'session.files' => '/tmp/storage/framework/sessions',
+            ]);
         }
     })
     ->create();

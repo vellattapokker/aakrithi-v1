@@ -27,7 +27,7 @@ if (isset($_SERVER['VERCEL_URL']) || isset($_ENV['VERCEL_URL'])) {
     }
 
     $storage = [
-        '/tmp/storage/framework/cache',
+        '/tmp/storage/framework/cache/data',
         '/tmp/storage/framework/sessions',
         '/tmp/storage/framework/views',
         '/tmp/storage/logs',
