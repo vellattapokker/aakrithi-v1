@@ -6,7 +6,7 @@
         "node": ">=18.0.0"
     },
     "scripts": {
-        "build": "vite build && cp -r public dist && rm dist/index.php",
+        "build": "vite build",
         "dev": "vite"
     },
     "devDependencies": {

@@ -1,12 +1,19 @@
 {
   "version": 2,
-  "outputDirectory": "dist",
   "functions": {
     "api/index.php": {
       "runtime": "vercel-php@0.7.4"
     }
   },
   "routes": [
+    {
+      "src": "/(app|bootstrap|config|database|resources|routes|storage|tests|vendor|node_modules|\\.env.*|composer\\..*|package\\..*|vite\\.config\\.js|phpunit\\.xml|artisan)/.*",
+      "status": 403
+    },
+    {
+      "src": "/(css|js|images|build|favicon\\.ico|robots\\.txt)(.*)",
+      "dest": "/public/$1$2"
+    },
     {
       "handle": "filesystem"
     },
