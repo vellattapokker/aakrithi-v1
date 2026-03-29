@@ -1,5 +1,7 @@
 <?php
 
+die("API Entry Point Reached - PHP Version: " . phpversion());
+
 /**
  * Forward all requests to the public/index.php file.
  * This is the entry point for Vercel functions.
