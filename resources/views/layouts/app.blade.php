@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- CRITICAL PRELOADER CSS (MUST BE FIRST) -->
+    <style>
+        #global-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #FEFEE3;
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .loader-brand {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 110px;
+            height: 110px;
+            margin-bottom: 2rem;
+        }
+
+        .loader-logo {
+            width: 70px;
+            height: auto;
+            z-index: 2;
+            animation: pulse-logo 2s ease-in-out infinite;
+        }
+
+        .loader-ring {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid transparent;
+            border-top-color: #C5A059;
+            border-bottom-color: #C5A059;
+            border-radius: 50%;
+            animation: spin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+            opacity: 0.8;
+        }
+        
+        .loader-ring-inner {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: calc(100% - 20px);
+            height: calc(100% - 20px);
+            border: 1px solid transparent;
+            border-left-color: rgba(197, 160, 89, 0.4);
+            border-right-color: rgba(197, 160, 89, 0.4);
+            border-radius: 50%;
+            animation: spin-reverse 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
+
+        .loader-text {
+            color: #C5A059;
+            font-size: 0.85rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-weight: 500;
+            animation: pulse-logo 2s ease-in-out infinite;
+            padding-left: 5px;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes spin-reverse { 100% { transform: rotate(-360deg); } }
+        @keyframes pulse-logo {
+            0%, 100% { transform: scale(0.95); opacity: 0.7; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+    </style>
+
+    <!-- SEO Meta Tags Component -->
+    <x-seo-meta 
+        :title="trim($__env->yieldContent('meta_title')) ?: setting('site_title', 'Aakrithi - Modern Fashion')"
+        :description="trim($__env->yieldContent('meta_description')) ?: setting('site_description', 'Discover curated artisanal clothing designed for comfort and elegance.')"
+        :image="trim($__env->yieldContent('og_image')) ?: (setting('og_image') ?: asset('images/logo.png'))"
+        :is-noindex="trim($__env->yieldContent('is_noindex')) == 'true'"
+    />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@@context": "https://schema.org",
+        "@@graph": [
+            {
+                "@@type": "Organization",
+                "name": "{{ setting('site_title', 'Aakrithi') }}",
+                "url": "{{ url('/') }}",
+                "logo": "{{ asset('images/logo.png') }}",
+                "sameAs": [
+                    "{{ setting('instagram_url', '#') }}",
+                    "{{ setting('facebook_url', '#') }}",
+                    "{{ setting('twitter_url', '#') }}"
+                ]
+            },
+            {
+                "@@type": "WebSite",
+                "name": "{{ setting('site_title', 'Aakrithi') }}",
+                "url": "{{ url('/') }}"
+            }
+        ]
+    }
+    </script>
+    @yield('structured_data')
+
+    @if(setting('google_site_verification'))
+    <!-- Google Search Console -->
+    <meta name="google-site-verification" content="{{ setting('google_site_verification') }}" />
+    @endif
+
+    @if(setting('google_analytics_id'))
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ setting('google_analytics_id') }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ setting('google_analytics_id') }}');
+    </script>
+    @endif
+
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=1.1.6">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* CRITICAL MOBILE FIX (BYPASS CACHE) */
+        @media (max-width: 992px) {
+            /* Force navbar above backdrop when menu is open */
+            #navbar:has(#navLinks.open),
+            .navbar:has(.navbar-links.open) {
+                z-index: 10000 !important;
+            }
+
+            #navLinks.open {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important; /* CENTERED */
+                background: #FEFEE3 !important; /* Page BG */
+                z-index: 10001 !important;
+                position: fixed !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                border-right: 1px solid #E0E0C0 !important;
+                box-shadow: 15px 0 40px rgba(0,0,0,0.08) !important;
+                padding-top: 2rem !important;
+            }
+            .mobile-nav-logo-item {
+                display: block !important;
+                margin-bottom: 2rem !important;
+                text-align: center !important;
+            }
+            .mobile-nav-logo-item img {
+                height: 60px !important; /* BIGGER LOGO */
+                width: auto !important;
+            }
+            #navLinks:not(.open) .mobile-nav-logo-item {
+                display: none !important;
+            }
+            #navLinks.open li a {
+                text-align: center !important;
+                align-items: center !important;
+            }
+            #navLinks.open, #navLinks.open * {
+                color: #465362 !important;
+                opacity: 1 !important;
+                text-decoration: none !important;
+                -webkit-font-smoothing: antialiased;
+                text-shadow: none !important;
+                backdrop-filter: none !important;
+            }
+            .navbar-links.open .nav-brand {
+                opacity: 0.7 !important;
+                text-align: center !important;
+            }
+            .mobile-menu-backdrop {
+                z-index: 9000 !important; /* Backdrop stays below navbar-open */
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                background: rgba(0,0,0,0.3) !important;
+            }
+        }
+        
+        /* LIGHT THEME FOOTER FIX (GLOBAL) */
+        .footer {
+            background: #F8F9FA !important;
+            border-top: 1px solid #EEEEEE !important;
+        }
+        .footer h3, .footer h4, .footer p, .footer a, .footer li, .footer button, .footer input {
+            color: #465362 !important;
+        }
+        .footer-links a, .footer-brand p, .footer-bottom p {
+            opacity: 0.8 !important;
+        }
+        .newsletter-form {
+            border-bottom: 1px solid rgba(70, 83, 98, 0.2) !important;
+        }
+        /* Global Preloader - Premium Design - Moved to head for critical path */
+    </style>
+    @yield('styles')
+</head>
+<body>
+    <!-- Premium Global Preloader -->
+    <div id="global-loader">
+        <div class="loader-brand">
+            <div class="loader-ring"></div>
+            <div class="loader-ring-inner"></div>
+            <img src="{{ asset('images/logo.png') }}" alt="Aakrithi" class="loader-logo">
+        </div>
+        <div class="loader-text">Aakrithi</div>
+    </div>
+
+    {{-- Navbar --}}
+    <nav class="navbar" id="navbar">
+        <div class="container navbar-content">
+            <button class="mobile-menu-toggle" id="menuToggle">
+                <i data-lucide="menu" id="menuIcon"></i>
+            </button>
+
+            <a href="{{ route('home') }}" class="navbar-logo"><img src="{{ asset('images/logo.png') }}" alt="Aakrithi"></a>
+
+            <ul class="navbar-links" id="navLinks">
+                <li class="mobile-nav-logo-item"><a href="{{ route('home') }}"><img src="{{ asset('images/logo.png') }}" alt="Aakrithi"></a></li>
+                <li><a href="{{ route('category', 'apparels') }}"><span class="nav-brand">Aakrithi</span><span class="nav-category">Apparels</span></a></li>
+                <li><a href="{{ route('category', 'kutties') }}"><span class="nav-brand">Aakrithi</span><span class="nav-category">Kutties</span></a></li>
+                <li><a href="{{ route('category', 'decors') }}"><span class="nav-brand">Aakrithi</span><span class="nav-category">Decors</span></a></li>
+                <li><a href="{{ route('category', 'boutique') }}"><span class="nav-brand">Aakrithi</span><span class="nav-category">Boutique & Designs</span></a></li>
+            </ul>
+
+            <div class="navbar-actions">
+                <button class="nav-action-btn"><i data-lucide="search"></i></button>
+                @auth
+                    <div class="nav-user-dropdown">
+                        <a href="{{ route('account') }}" class="nav-action-btn"><i data-lucide="user"></i></a>
+                        <div class="dropdown-content">
+                            <span class="user-greeting">Hi, {{ Auth::user()->name }}</span>
+                            <hr>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="logout-btn"><i data-lucide="log-out"></i> Logout</button>
+                            </form>
+                        </div>
+                    </div>
+                @else
+                    <a href="{{ route('account') }}" class="nav-action-btn"><i data-lucide="user"></i></a>
+                @endauth
+                <a href="{{ route('wishlist') }}" class="nav-action-btn wishlist-icon" style="position:relative">
+                    <i data-lucide="heart"></i>
+                    @php($wishlist_count = session('wishlist') ? count(session('wishlist')) : 0)
+                    <span class="cart-count" id="wishlistCount" style="background: var(--premium-accent, #C5A059); display: {{ $wishlist_count > 0 ? 'flex' : 'none' }};">{{ $wishlist_count }}</span>
+                </a>
+
+
+                <a href="{{ route('cart') }}" class="nav-action-btn cart-icon" style="position:relative">
+                    <i data-lucide="shopping-bag"></i>
+                    @php($cart_count = session('cart') ? count(session('cart')) : 0)
+                    <span class="cart-count" id="cartCount">{{ $cart_count }}</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="mobile-menu-backdrop" id="menuBackdrop"></div>
+
+    {{-- Main Content --}}
+    <main style="padding-top: var(--header-height);">
+        @yield('content')
+    </main>
+
+    {{-- Footer --}}
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>AAKRITHI</h3>
+                    <p>Curated artisanal clothing designed for comfort and elegance. Blending traditional Indian craftsmanship with modern silhouettes.</p>
+                    <div class="social-links">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a>
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16zM4 20l6.768 -6.768M15.232 10.232l4.768 -6.232"/></svg></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="{{ route('category', 'apparels') }}">Apparels</a></li>
+                        <li><a href="{{ route('category', 'kutties') }}">Kutties</a></li>
+                        <li><a href="{{ route('category', 'decors') }}">Decors</a></li>
+                        <li><a href="{{ route('category', 'boutique') }}">Boutique</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Info</h4>
+                    <ul>
+                        <li><a href="{{ route('about') }}">Our Story</a></li>
+                        <li><a href="{{ route('contact') }}">Contact</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Returns</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Newsletter</h4>
+                    <p style="color:#A0A5AB; font-size:0.875rem; margin-bottom:1rem;">Subscribe for exclusive updates and offers.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address">
+                        <button type="submit"><i data-lucide="arrow-right"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; {{ date('Y') }} Aakrithi. All rights reserved.</p>
+                <div class="payment-icons">
+                    <span>Visa</span> <span>Mastercard</span> <span>UPI</span> <span>Net Banking</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ asset('js/app.js') }}?v=1.0.6"></script>
+    <script>lucide.createIcons();</script>
+    
+    <!-- Preloader Script -->
+    <script>
+        // Fade OUT when the new page finishes loading
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('global-loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.visibility = 'hidden';
+                    loader.style.display = 'none';
+                }, 400); // Matches transition duration
+            }
+        });
+
+        // Fade IN instantly when clicking internal links or submitting forms
+        // Fade IN instantly when clicking internal links or submitting forms
+        document.addEventListener('DOMContentLoaded', () => {
+            const loader = document.getElementById('global-loader');
+            
+            // Handle browser refresh & general navigation
+            window.addEventListener('beforeunload', () => {
+                if (loader) {
+                    loader.style.display = 'flex';
+                    loader.style.visibility = 'visible';
+                    loader.style.opacity = '1';
+                }
+            });
+
+            document.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    const target = this.getAttribute('target');
+                    
+                    // Only trigger if it's a valid routing link
+                    if (href && !href.startsWith('#') && !href.startsWith('javascript') && target !== '_blank' && !e.ctrlKey && !e.metaKey) {
+                        if (loader) {
+                            loader.style.display = 'flex';
+                            loader.style.visibility = 'visible';
+                            loader.style.opacity = '1';
+                        }
+                    }
+                });
+            });
+
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    const target = this.getAttribute('target');
+                    if (target !== '_blank') {
+                        if (loader) {
+                            loader.style.display = 'flex';
+                            loader.style.visibility = 'visible';
+                            loader.style.opacity = '1';
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    
+    @yield('scripts')
+    
+    <script>
+        function addToWishlist(id) {
+            fetch(`/add-to-wishlist/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    const countSpan = document.getElementById('wishlistCount');
+                    if (countSpan) {
+                        countSpan.innerText = data.count;
+                        countSpan.style.display = 'flex';
+                    }
+                    alert(data.message);
+                });
+        }
+    </script>
+</body>
+</html>
