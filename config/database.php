@@ -98,7 +98,7 @@ return [
             'sslmode' => env('DB_SSLMODE', 'prefer'),
             'options' => [
                 \PDO::ATTR_EMULATE_PREPARES => true,
-                \PDO::ATTR_PERSISTENT => true,
+                \PDO::ATTR_PERSISTENT => false,
             ],
         ],
 
