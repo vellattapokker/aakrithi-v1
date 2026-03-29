@@ -197,28 +197,46 @@
             }
         }
         
-        /* Search Overlay - High End */
+        /* Search Overlay - Premium Discovery Hub */
         .search-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(254, 254, 227, 0.98); backdrop-filter: blur(20px);
-            z-index: 10000; display: none; opacity: 0; transition: opacity 0.4s ease;
+            background: rgba(254, 254, 227, 0.98); backdrop-filter: blur(40px);
+            z-index: 10000; display: none; opacity: 0; transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             align-items: center; justify-content: center;
         }
         .search-overlay.active { display: flex; opacity: 1; }
-        .search-container { width: 90%; max-width: 800px; position: relative; }
-        .search-close { position: absolute; top: -80px; right: 0; color: #465362; cursor: pointer; border: 1.5px solid #E0E0C0; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
-        .search-close:hover { border-color: var(--color-accent); color: var(--color-accent); transform: rotate(90deg); }
-        .search-input-wrapper { display: flex; align-items: center; border-bottom: 2px solid #C5A059; padding: 1rem 0; gap: 1.5rem; }
-        .search-icon-inside { color: var(--color-accent); width: 32px; height: 32px; }
-        .search-input-wrapper input { background: transparent; border: none; font-size: 2.5rem; font-family: var(--font-family); color: #465362; width: 100%; outline: none; font-weight: 300; }
+        .search-container { width: 90%; max-width: 900px; position: relative; text-align: center; }
+        .search-close { position: absolute; top: -100px; right: 0; color: #465362; cursor: pointer; border: 1.5px solid #E0E0C0; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: all 0.4s; }
+        .search-close:hover { border-color: var(--color-accent); color: var(--color-accent); transform: rotate(90deg) scale(1.1); }
+        
+        .search-input-wrapper { display: flex; align-items: center; border-bottom: 2px solid #C5A059; padding: 1.5rem 0; gap: 2rem; transform: translateY(20px); opacity: 0; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+        .search-overlay.active .search-input-wrapper { transform: translateY(0); opacity: 1; }
+        
+        .search-icon-inside { color: var(--color-accent); width: 40px; height: 40px; }
+        .search-input-wrapper input { background: transparent; border: none; font-size: clamp(1.5rem, 4vw, 3.5rem); font-family: var(--font-family); color: #465362; width: 100%; outline: none; font-weight: 300; letter-spacing: -1px; }
         .search-input-wrapper input::placeholder { color: #E0E0C0; }
-        .search-hints { margin-top: 1.5rem; display: flex; gap: 1rem; align-items: center; font-size: 0.9rem; color: #465362; opacity: 0.7; }
-        .search-hint { text-decoration: underline; color: var(--color-accent); font-weight: 600; cursor: pointer; }
-        .search-hint:hover { color: #465362; }
+
+        .discovery-hub { margin-top: 4rem; text-align: left; transform: translateY(30px); opacity: 0; transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.1s; }
+        .search-overlay.active .discovery-hub { transform: translateY(0); opacity: 1; }
+        
+        .discovery-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 4px; color: var(--color-accent); font-weight: 700; margin-bottom: 2rem; display: block; }
+        
+        .discovery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        .discovery-item { background: rgba(255,255,255,0.4); border: 1px solid var(--color-border); padding: 2rem 1rem; border-radius: 16px; text-align: center; transition: all 0.4s; cursor: pointer; text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+        .discovery-item:hover { background: #fff; border-color: var(--color-accent); transform: translateY(-10px); box-shadow: 0 20px 40px rgba(197, 160, 89, 0.1); }
+        .discovery-item i { width: 32px; height: 32px; color: var(--color-accent); }
+        .discovery-item span { font-weight: 600; font-size: 0.9rem; color: #465362; }
+
+        .search-hints-premium { margin-top: 2rem; display: flex; gap: 1.5rem; align-items: center; font-size: 0.95rem; color: #465362; opacity: 0; transition: opacity 1s ease 0.3s; }
+        .search-overlay.active .search-hints-premium { opacity: 0.7; }
+        .search-hint-link { text-decoration: none; color: var(--color-accent); font-weight: 600; cursor: pointer; border-bottom: 1px solid transparent; transition: all 0.3s; }
+        .search-hint-link:hover { border-bottom-color: var(--color-accent); padding-bottom: 2px; }
 
         @media (max-width: 768px) {
-            .search-input-wrapper input { font-size: 1.5rem; }
-            .search-close { top: -60px; width: 36px; height: 36px; }
+            .discovery-grid { grid-template-columns: 1fr 1fr; }
+            .search-close { top: -80px; }
+            .search-input-wrapper { gap: 1rem; }
+            .discovery-hub { margin-top: 3rem; }
         }
 
         /* LIGHT THEME FOOTER FIX (GLOBAL) */
@@ -250,20 +268,42 @@
         <div class="loader-text">Aakrithi</div>
     </div>
 
-    {{-- Search Overlay --}}
+    {{-- Search Overlay - Discovery Hub --}}
     <div class="search-overlay" id="searchOverlay">
         <div class="search-container">
             <button class="search-close" id="searchCloseBtn"><i data-lucide="x"></i></button>
-            <div class="search-box-premium">
-                <div class="search-input-wrapper">
-                    <i data-lucide="search" class="search-icon-inside"></i>
-                    <input type="text" id="searchInputField" placeholder="Search for dresses, sarees, decors..." autocomplete="off">
-                </div>
-                <div class="search-hints">
-                    <span>Try:</span>
-                    <a href="javascript:void(0)" class="search-hint" onclick="executeSearch('Saree')">Saree</a>
-                    <a href="javascript:void(0)" class="search-hint" onclick="executeSearch('Dress')">Dress</a>
-                    <a href="javascript:void(0)" class="search-hint" onclick="executeSearch('Linen')">Linen</a>
+            
+            <div class="search-input-wrapper">
+                <i data-lucide="search" class="search-icon-inside"></i>
+                <input type="text" id="searchInputField" placeholder="Discover artisanal style..." autocomplete="off">
+            </div>
+
+            <div class="search-hints-premium">
+                <span>Trending:</span>
+                <a href="javascript:void(0)" class="search-hint-link" onclick="executeSearch('Silk Saree')">Silk Saree</a>
+                <a href="javascript:void(0)" class="search-hint-link" onclick="executeSearch('Linen')">Linen</a>
+                <a href="javascript:void(0)" class="search-hint-link" onclick="executeSearch('Home Decor')">Home Decor</a>
+            </div>
+
+            <div class="discovery-hub">
+                <span class="discovery-label">Curated Collections</span>
+                <div class="discovery-grid">
+                    <a href="{{ route('category', 'apparels') }}" class="discovery-item">
+                        <i data-lucide="shirt"></i>
+                        <span>Apparels</span>
+                    </a>
+                    <a href="{{ route('category', 'kutties') }}" class="discovery-item">
+                        <i data-lucide="baby"></i>
+                        <span>Kutties</span>
+                    </a>
+                    <a href="{{ route('category', 'decors') }}" class="discovery-item">
+                        <i data-lucide="home"></i>
+                        <span>Decors</span>
+                    </a>
+                    <a href="{{ route('category', 'boutique') }}" class="discovery-item">
+                        <i data-lucide="scissors"></i>
+                        <span>Boutique</span>
+                    </a>
                 </div>
             </div>
         </div>
