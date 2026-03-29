@@ -197,6 +197,30 @@
             }
         }
         
+        /* Search Overlay - High End */
+        .search-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(254, 254, 227, 0.98); backdrop-filter: blur(20px);
+            z-index: 10000; display: none; opacity: 0; transition: opacity 0.4s ease;
+            align-items: center; justify-content: center;
+        }
+        .search-overlay.active { display: flex; opacity: 1; }
+        .search-container { width: 90%; max-width: 800px; position: relative; }
+        .search-close { position: absolute; top: -80px; right: 0; color: #465362; cursor: pointer; border: 1.5px solid #E0E0C0; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .search-close:hover { border-color: var(--color-accent); color: var(--color-accent); transform: rotate(90deg); }
+        .search-input-wrapper { display: flex; align-items: center; border-bottom: 2px solid #C5A059; padding: 1rem 0; gap: 1.5rem; }
+        .search-icon-inside { color: var(--color-accent); width: 32px; height: 32px; }
+        .search-input-wrapper input { background: transparent; border: none; font-size: 2.5rem; font-family: var(--font-family); color: #465362; width: 100%; outline: none; font-weight: 300; }
+        .search-input-wrapper input::placeholder { color: #E0E0C0; }
+        .search-hints { margin-top: 1.5rem; display: flex; gap: 1rem; align-items: center; font-size: 0.9rem; color: #465362; opacity: 0.7; }
+        .search-hint { text-decoration: underline; color: var(--color-accent); font-weight: 600; cursor: pointer; }
+        .search-hint:hover { color: #465362; }
+
+        @media (max-width: 768px) {
+            .search-input-wrapper input { font-size: 1.5rem; }
+            .search-close { top: -60px; width: 36px; height: 36px; }
+        }
+
         /* LIGHT THEME FOOTER FIX (GLOBAL) */
         .footer {
             background: #F8F9FA !important;
@@ -226,6 +250,25 @@
         <div class="loader-text">Aakrithi</div>
     </div>
 
+    {{-- Search Overlay --}}
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-container">
+            <button class="search-close" id="searchCloseBtn"><i data-lucide="x"></i></button>
+            <div class="search-box-premium">
+                <div class="search-input-wrapper">
+                    <i data-lucide="search" class="search-icon-inside"></i>
+                    <input type="text" id="searchInputField" placeholder="Search for dresses, sarees, decors..." autocomplete="off">
+                </div>
+                <div class="search-hints">
+                    <span>Try:</span>
+                    <a href="javascript:void(0)" class="search-hint" onclick="executeSearch('Saree')">Saree</a>
+                    <a href="javascript:void(0)" class="search-hint" onclick="executeSearch('Dress')">Dress</a>
+                    <a href="javascript:void(0)" class="search-hint" onclick="executeSearch('Linen')">Linen</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- Navbar --}}
     <nav class="navbar" id="navbar">
         <div class="container navbar-content">
@@ -244,7 +287,7 @@
             </ul>
 
             <div class="navbar-actions">
-                <button class="nav-action-btn"><i data-lucide="search"></i></button>
+                <button class="nav-action-btn" id="searchToggleBtn" title="Search Collection"><i data-lucide="search"></i></button>
                 @auth
                     <div class="nav-user-dropdown">
                         <a href="{{ route('account') }}" class="nav-action-btn"><i data-lucide="user"></i></a>
@@ -332,7 +375,46 @@
     </footer>
 
     <script src="{{ asset('js/app.js') }}?v=1.0.6"></script>
-    <script>lucide.createIcons();</script>
+    <script>
+        lucide.createIcons();
+
+        // Search Interface - Premium Integration
+        const searchOverlay = document.getElementById('searchOverlay');
+        const searchToggleBtn = document.getElementById('searchToggleBtn');
+        const searchCloseBtn = document.getElementById('searchCloseBtn');
+        const searchInputField = document.getElementById('searchInputField');
+
+        function toggleSearch(show) {
+            if (show) {
+                searchOverlay.style.display = 'flex';
+                setTimeout(() => {
+                    searchOverlay.classList.add('active');
+                    searchInputField.focus();
+                }, 10);
+            } else {
+                searchOverlay.classList.remove('active');
+                setTimeout(() => searchOverlay.style.display = 'none', 400);
+            }
+        }
+
+        searchToggleBtn.addEventListener('click', () => toggleSearch(true));
+        searchCloseBtn.addEventListener('click', () => toggleSearch(false));
+        
+        // Close on ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && searchOverlay.classList.contains('active')) toggleSearch(false);
+        });
+
+        // Search Logic
+        function executeSearch(query) {
+            const q = query || searchInputField.value.trim();
+            if (q) window.location.href = `/shop?category=all&sort=latest&search=${encodeURIComponent(q)}`;
+        }
+
+        searchInputField.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') executeSearch();
+        });
+    </script>
     
     <!-- Preloader Script -->
     <script>

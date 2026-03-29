@@ -214,11 +214,18 @@
         .mobile-nav-premium a { color: var(--premium-text-light); text-decoration: none; padding: 8px; border-radius: 8px; }
         .mobile-nav-premium a.active { color: var(--premium-accent); background: rgba(197, 160, 89, 0.05); }
 
-        .content-card-premium { padding: 1.5rem; border-radius: 16px; }
+        .content-card-premium { padding: 2rem 1.25rem; border-radius: 16px; }
         .card-header-premium h2 { font-size: 1.4rem; }
-        .order-item-premium { grid-template-columns: 1fr; gap: 1rem; text-align: center; }
-        .order-action { justify-content: center; }
-        .price { margin: 8px 0; }
+        .order-item-premium { 
+            grid-template-columns: 1fr; 
+            gap: 1.25rem; 
+            padding: 2rem 0;
+            text-align: left;
+        }
+        .order-main-info { display: flex; justify-content: space-between; align-items: flex-start; }
+        .order-status-price { display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--premium-border); padding-top: 1rem; }
+        .order-action { justify-content: flex-start; border-top: 1px dashed var(--premium-border); padding-top: 1rem; }
+        .price { margin: 0; }
     }
 </style>
 @endsection

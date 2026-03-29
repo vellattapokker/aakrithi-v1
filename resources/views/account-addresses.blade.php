@@ -316,8 +316,10 @@
         .mobile-nav-premium a { color: var(--premium-text-light); text-decoration: none; padding: 8px; border-radius: 8px; }
         .mobile-nav-premium a.active { color: var(--premium-accent); background: rgba(197, 160, 89, 0.05); }
 
-        .content-card-premium { padding: 2rem 1.5rem; border-radius: 16px; margin-top: 1rem; }
+        .content-card-premium { padding: 2rem 1.25rem; border-radius: 16px; margin-top: 1rem; }
         .card-header-premium h2 { font-size: 1.5rem; }
+        .address-grid-premium { grid-template-columns: 1fr; gap: 1rem; }
+        .address-premium-card { padding: 1.5rem 1.25rem; }
         .form-row, .triplet { grid-template-columns: 1fr; }
     }
 </style>

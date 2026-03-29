@@ -7,7 +7,6 @@
 {{-- Hero --}}
 <section class="hero">
     <div class="hero-content fade-in-up">
-        <span class="hero-subtitle">Spring / Summer 2026</span>
         <h1 class="hero-title">Timeless Style for the Modern Soul</h1>
         <p class="hero-description">Discover our curated collection of artisanal clothing designed for comfort and elegance.</p>
         <div class="hero-actions">

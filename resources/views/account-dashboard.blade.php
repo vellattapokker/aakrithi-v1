@@ -261,10 +261,12 @@
         .mobile-nav-premium a { color: var(--premium-text-light); text-decoration: none; padding: 8px; border-radius: 8px; }
         .mobile-nav-premium a.active { color: var(--premium-accent); background: rgba(197, 160, 89, 0.05); }
 
-        .content-card-premium { padding: 2rem 1.5rem; border-radius: 16px; margin-top: 1rem; }
+        .content-card-premium { padding: 2rem 1.25rem; border-radius: 16px; margin-top: 1rem; }
         .hub-hero h2 { font-size: 1.6rem; }
         .hub-hero p { font-size: 0.95rem; }
         .card-header-premium h2 { font-size: 1.4rem; }
+        .hub-grid { grid-template-columns: 1fr; gap: 1rem; }
+        .hub-box { padding: 1.75rem 1.25rem; }
         .order-item-premium { grid-template-columns: 1fr; gap: 1rem; text-align: center; }
         .order-action { justify-content: center; }
         .price { margin: 8px 0; }

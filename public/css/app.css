@@ -310,7 +310,7 @@ img {
 
 .btn-primary:hover {
     background: #FFFFFF;
-    color: var(--color-primary);
+    color: var(--color-text);
     transform: translateY(-2px);
     box-shadow: 0 15px 30px rgba(197, 160, 89, 0.3);
 }
@@ -2424,6 +2424,14 @@ img {
     }
 
     /* Checkout Page Specifics */
+    .checkout-container {
+        padding: 1.5rem 1rem;
+    }
+
+    .checkout-card {
+        padding: 1.5rem 1.25rem;
+    }
+
     .form-grid {
         grid-template-columns: 1fr;
     }
@@ -2437,7 +2445,21 @@ img {
     }
 
     .checkout-steps {
-        scale: 0.9;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .checkout-steps .separator {
+        display: none;
+    }
+
+    /* Auth Page Responsiveness */
+    .auth-page {
+        padding: 2rem 1rem;
+    }
+
+    .auth-card {
+        padding: 2rem 1.5rem;
     }
 }
 
@@ -2457,10 +2479,16 @@ img {
     }
 
     .navbar-actions {
-        gap: 0.5rem;
+        gap: 0.35rem; /* Tighter gap for very small screens */
     }
 
-    /* Optionally hide some icons on very small screens to save space if needed */
+    .navbar-logo img {
+        height: 48px;
+    }
+
+    .checkout-header h1 {
+        font-size: 1.75rem;
+    }
 }
 
 /* Ensure horizontal scroll is dead */
