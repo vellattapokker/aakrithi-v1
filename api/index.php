@@ -32,4 +32,16 @@ if (file_exists(__DIR__ . '/../public/index.php')) {
     die("ERROR: public/index.php NOT FOUND at " . realpath(__DIR__ . '/../public/index.php'));
 }
 
-require __DIR__ . '/../public/index.php';
+try {
+    echo "Attempting to require public/index.php...<br>";
+    require __DIR__ . '/../public/index.php';
+    echo "Successfully required public/index.php.<br>";
+} catch (\Throwable $e) {
+    echo "<h1>FATAL ERROR CAUGHT IN API ENTRY POINT</h1>";
+    echo "<b>Error:</b> " . $e->getMessage() . "<br>";
+    echo "<b>File:</b> " . $e->getFile() . "<br>";
+    echo "<b>Line:</b> " . $e->getLine() . "<br>";
+    echo "<b>Trace:</b><pre>" . $e->getTraceAsString() . "</pre>";
+    error_log($e);
+    die(); // Force output
+}
