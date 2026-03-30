@@ -1,6 +1,7 @@
 @props([
-    'title' => 'Aakrithi Fashion & Boutique',
-    'description' => 'Aakrithi brings you the finest selection of handloom sarees, designer kurtis, and exquisite ethnic wear.',
+    'title' => 'Aakrithi | Premium Boutique for Designer Ethnic Wear & Sarees',
+    'description' => 'Discover Aakrithi – your destination for handloom sarees, designer kurtis, and exquisite ethnic wear. Elevate your wardrobe with our curated artisanal collections.',
+    'keywords' => 'Aakrithi, ethnic wear online, handloom sarees, designer kurtis, Indian boutique, sustainable fashion, artisanal clothing',
     'image' => asset('images/logo.png'),
     'url' => url()->current(),
     'isNoindex' => false,
@@ -8,6 +9,7 @@
 
 <title>{{ $title }}</title>
 <meta name="description" content="{{ $description }}">
+<meta name="keywords" content="{{ $keywords }}">
 <link rel="canonical" href="{{ $url }}" />
 
 @if($isNoindex)

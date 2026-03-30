@@ -22,21 +22,26 @@ class ProductController extends Controller
 
         if ($category) {
             $categoryMap = [
-                'apparels' => 'Apparels',
-                'kutties' => 'Kutties',
-                'decors' => 'Decors',
-                'boutique' => 'Boutique & Designs',
+                'apparels' => 'Designer Apparels & Ethnic Wear',
+                'kutties' => 'Kutties Collection - Traditional Kids Wear',
+                'decors' => 'Handloom Home Decors & Embroidered Sarees',
+                'boutique' => 'Custom Boutique & Designer Studio',
             ];
             $catName = $categoryMap[$category] ?? ucfirst($category);
             $query->where('category', $catName);
-            $title = "Aakrithi $catName";
+            $title = "$catName | Aakrithi";
+            $meta_description = "Shop $catName at Aakrithi. Our curated collection brings you the finest selection of handpicked artisanal clothing and home decor.";
+        } else {
+            $meta_description = "Explore the full collection of designer ethnic wear, handloom sarees, and artisanal products at Aakrithi. Find timeless style for every occasion.";
         }
+
+        $meta_keywords = "Aakrithi shop, designer apparel, ethnic wear online, boutique sarees, traditional Indian clothing";
 
         // Apply Sorting
         $this->applySorting($query, $sort);
 
         $products = $query->get();
-        return view('shop', compact('products', 'title'));
+        return view('shop', compact('products', 'title', 'meta_description', 'meta_keywords'));
     }
 
     public function category(Request $request, $slug)
@@ -45,21 +50,23 @@ class ProductController extends Controller
         $query = Product::query();
         
         $categoryMap = [
-            'apparels' => 'Apparels',
-            'kutties' => 'Kutties',
-            'decors' => 'Decors',
-            'boutique' => 'Boutique & Designs',
+            'apparels' => 'Designer Apparels & Ethnic Wear',
+            'kutties' => 'Kutties Collection - Traditional Kids Wear',
+            'decors' => 'Handloom Home Decors & Embroidered Sarees',
+            'boutique' => 'Custom Boutique & Designer Studio',
         ];
         $catName = $categoryMap[strtolower($slug)] ?? ucfirst(str_replace('-', ' ', $slug));
         
         $query->where('category', $catName);
-        $title = "Aakrithi $catName";
+        $title = "$catName | Aakrithi";
+        $meta_description = "Shop $catName at Aakrithi. Discover our unique collection of artisanal clothing and home decor handcrafted for elegance.";
+        $meta_keywords = "$catName, Aakrithi collection, Indian ethnic wear, designer sarees, handloom boutique";
 
         // Apply Sorting
         $this->applySorting($query, $sort);
 
         $products = $query->get();
-        return view('shop', compact('products', 'title'));
+        return view('shop', compact('products', 'title', 'meta_description', 'meta_keywords'));
     }
 
     private function applySorting($query, $sort)

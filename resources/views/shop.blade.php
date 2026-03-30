@@ -1,7 +1,8 @@
 @extends('layouts.app')
-@section('title', 'Shop - Aakrithi')
-@section('meta_title', 'Shop Our Collection | Aakrithi Fashion')
-@section('meta_description', 'Browse our exclusive range of Designer Kurthies, Kerala Sets, and Embroidered Sarees. Quality artisanal wear for every occasion.')
+@section('title', ($title ?? 'Shop') . ' - Aakrithi')
+@section('meta_title', $title ?? 'Shop Our Collection | Aakrithi Premium Boutique')
+@section('meta_description', $meta_description ?? 'Browse our exclusive range of Designer Kurthies, Kerala Sets, and Embroidered Sarees. Quality artisanal wear for every occasion.')
+@section('meta_keywords', $meta_keywords ?? 'Aakrithi shop, designer apparel, ethnic wear online, boutique sarees')
 
 @section('structured_data')
 <script type="application/ld+json">

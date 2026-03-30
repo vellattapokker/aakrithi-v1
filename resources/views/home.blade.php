@@ -1,13 +1,13 @@
 @extends('layouts.app')
-@section('meta_title', setting('site_title', 'Aakrithi - Modern Fashion Ecommerce'))
-@section('meta_description', setting('site_description', 'Discover our curated collection of artisanal clothing designed for comfort and elegance.'))
-@section('meta_keywords', setting('meta_keywords', 'fashion, artisanal, ethnic wear, saree, kurta'))
+@section('meta_title', setting('site_title', 'Aakrithi | Premium Boutique for Designer Ethnic Wear & Handloom Sarees'))
+@section('meta_description', setting('site_description', 'Aakrithi offers a curated collection of designer ethnic wear, handloom sarees, and artisanal clothing for the modern woman. Shop timeless style and elegance.'))
+@section('meta_keywords', setting('meta_keywords', 'Aakrithi boutique, designer ethnic wear, handloom sarees online, designer kurtis, Kerala sarees, sustainable fashion India'))
 
 @section('content')
 {{-- Hero --}}
 <section class="hero">
     <div class="hero-content fade-in-up">
-        <h1 class="hero-title">Timeless Style for the Modern Soul</h1>
+        <h1 class="hero-title">Exclusive Boutique for Designer Ethnic Wear & Handloom Sarees</h1>
         <p class="hero-description">Discover our curated collection of artisanal clothing designed for comfort and elegance.</p>
         <div class="hero-actions">
             <a href="{{ route('shop') }}" class="btn-primary">Shop Collection <i data-lucide="arrow-right"></i></a>
@@ -26,15 +26,15 @@
     </div>
     <div class="categories-grid">
         <a href="{{ route('category', 'apparels') }}" class="category-item">
-            <img src="{{ asset('images/cat_dresses.png') }}" alt="Designer Kurthies" loading="lazy">
+            <img src="{{ asset('images/cat_dresses.png') }}" alt="Designer Kurthies and Ethnic Tops | Aakrithi Collection" loading="lazy">
             <div class="category-overlay">Designer Kurthies</div>
         </a>
         <a href="{{ route('category', 'kutties') }}" class="category-item">
-            <img src="{{ asset('images/cat_sets.png') }}" alt="Kerala Sets" loading="lazy">
+            <img src="{{ asset('images/cat_sets.png') }}" alt="Traditional Kerala Sets and Handloom Mundu | Aakrithi" loading="lazy">
             <div class="category-overlay">Kerala Sets</div>
         </a>
         <a href="{{ route('category', 'decors') }}" class="category-item">
-            <img src="{{ asset('images/cat_sarees.png') }}" alt="Embroidered Sarees" loading="lazy">
+            <img src="{{ asset('images/cat_sarees.png') }}" alt="Exquisite Embroidered Sarees and Designer Blouses | Aakrithi" loading="lazy">
             <div class="category-overlay">Embroidered Sarees</div>
         </a>
     </div>
