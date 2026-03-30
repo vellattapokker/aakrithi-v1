@@ -1,7 +1,7 @@
 @props([
-    'title' => 'Aakrithi | Premium Boutique for Designer Ethnic Wear & Sarees',
-    'description' => 'Discover Aakrithi – your destination for handloom sarees, designer kurtis, and exquisite ethnic wear. Elevate your wardrobe with our curated artisanal collections.',
-    'keywords' => 'Aakrithi, ethnic wear online, handloom sarees, designer kurtis, Indian boutique, sustainable fashion, artisanal clothing',
+    'title' => 'Aakrithi | Premium Women\'s Ethnic Wear & Designer Kids Clothing Boutique',
+    'description' => 'Discover Aakrithi – your destination for designer ethnic wear, handloom sarees, and trendy kids\' party wear. From traditional kurtis to festive children\'s outfits, find timeless style for the whole family.',
+    'keywords' => 'Aakrithi, women\'s ethnic wear online, designer sarees India, kids party wear, traditional kids clothing, handcrafted Indian boutique, sustainable fashion, designer kurtis, Kerala sarees, festive children\'s outfits, newborn baby clothes online, bridal ethnic wear, artisanal fashion',
     'image' => asset('images/logo.png'),
     'url' => url()->current(),
     'isNoindex' => false,

@@ -89,9 +89,9 @@
 
     <!-- SEO Meta Tags Component -->
     <x-seo-meta 
-        :title="trim($__env->yieldContent('meta_title')) ?: setting('site_title', 'Aakrithi | Premium Boutique for Designer Ethnic Wear & Sarees')"
-        :description="trim($__env->yieldContent('meta_description')) ?: setting('site_description', 'Discover curated artisanal clothing designed for comfort and elegance.')"
-        :keywords="trim($__env->yieldContent('meta_keywords')) ?: setting('meta_keywords', 'Aakrithi, ethnic wear online, handloom sarees, designer kurtis, Indian boutique')"
+        :title="trim($__env->yieldContent('meta_title')) ?: setting('site_title', 'Aakrithi | Premium Women\'s Ethnic Wear & Designer Kids clothing Boutique')"
+        :description="trim($__env->yieldContent('meta_description')) ?: setting('site_description', 'Discover curated artisanal clothing, handcrafted sarees, and trendy kids\' party wear at Aakrithi – your destination for timeless family fashion.')"
+        :keywords="trim($__env->yieldContent('meta_keywords')) ?: setting('meta_keywords', 'Aakrithi, women\'s ethnic wear online, designer sarees, kids party wear, traditional kids sets, Indian boutique, designer kurtis, sustainable fashion')"
         :image="trim($__env->yieldContent('og_image')) ?: (setting('og_image') ?: asset('images/logo.png'))"
         :is-noindex="trim($__env->yieldContent('is_noindex')) == 'true'"
     />

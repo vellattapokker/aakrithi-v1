@@ -1,13 +1,13 @@
 @extends('layouts.app')
-@section('meta_title', setting('site_title', 'Aakrithi | Premium Boutique for Designer Ethnic Wear & Handloom Sarees'))
-@section('meta_description', setting('site_description', 'Aakrithi offers a curated collection of designer ethnic wear, handloom sarees, and artisanal clothing for the modern woman. Shop timeless style and elegance.'))
-@section('meta_keywords', setting('meta_keywords', 'Aakrithi boutique, designer ethnic wear, handloom sarees online, designer kurtis, Kerala sarees, sustainable fashion India'))
+@section('meta_title', setting('site_title', 'Aakrithi | Premium Women\'s Ethnic Wear & Designer Kids clothing Boutique'))
+@section('meta_description', setting('site_description', 'Shop Aakrithi for designer women\'s ethnic wear, handcrafted sarees, and trendy kids\' party wear. Discover a curated collection of traditional Indian clothing and artisanal fashion for the entire family.'))
+@section('meta_keywords', setting('meta_keywords', 'Aakrithi, women\'s ethnic wear, designer sarees online, kids party wear, traditional kids sets, newborn baby clothes, designer kurtis, Indian boutique, sustainable fashion India'))
 
 @section('content')
 {{-- Hero --}}
 <section class="hero">
     <div class="hero-content fade-in-up">
-        <h1 class="hero-title">Exclusive Boutique for Designer Ethnic Wear & Handloom Sarees</h1>
+        <h1 class="hero-title">Premium Women's Ethnic Wear & Designer Kids Clothing</h1>
         <p class="hero-description">Discover our curated collection of artisanal clothing designed for comfort and elegance.</p>
         <div class="hero-actions">
             <a href="{{ route('shop') }}" class="btn-primary">Shop Collection <i data-lucide="arrow-right"></i></a>
@@ -54,7 +54,7 @@
                 @if($product->badge)
                 <span class="badge">{{ $product->badge }}</span>
                 @endif
-                <img src="{{ $product->image }}" alt="{{ $product->name }}" class="product-image" loading="lazy">
+                <img src="{{ $product->image }}" alt="{{ $product->name }} - Premium {{ $product->category }} by Aakrithi" class="product-image" loading="lazy">
                 <div class="product-overlay">
                     <span class="overlay-btn primary">
                         <i data-lucide="shopping-bag"></i>
@@ -77,12 +77,12 @@
         <p>Inspired by our community around the globe</p>
     </div>
     <div class="instagram-grid">
-        <div class="instagram-item"><img src="{{ asset('images/insta_1.png') }}" alt="Instagram post" loading="lazy"></div>
-        <div class="instagram-item"><img src="{{ asset('images/prod_1.png') }}" alt="Instagram post" loading="lazy"></div>
-        <div class="instagram-item"><img src="{{ asset('images/prod_2.png') }}" alt="Instagram post" loading="lazy"></div>
-        <div class="instagram-item"><img src="{{ asset('images/prod_3.png') }}" alt="Instagram post" loading="lazy"></div>
-        <div class="instagram-item"><img src="{{ asset('images/cat_dresses.png') }}" alt="Instagram post" loading="lazy"></div>
-        <div class="instagram-item"><img src="{{ asset('images/cat_sets.png') }}" alt="Instagram post" loading="lazy"></div>
+        <div class="instagram-item"><img src="{{ asset('images/insta_1.png') }}" alt="Designer ethnic wear for women - Aakrithi Style" loading="lazy"></div>
+        <div class="instagram-item"><img src="{{ asset('images/prod_1.png') }}" alt="Handcrafted artisanal clothing collection" loading="lazy"></div>
+        <div class="instagram-item"><img src="{{ asset('images/prod_2.png') }}" alt="Traditional kids party wear and ethnic sets" loading="lazy"></div>
+        <div class="instagram-item"><img src="{{ asset('images/prod_3.png') }}" alt="Elegant handloom sarees and designer blouses" loading="lazy"></div>
+        <div class="instagram-item"><img src="{{ asset('images/cat_dresses.png') }}" alt="Latest trends in women's traditional fashion" loading="lazy"></div>
+        <div class="instagram-item"><img src="{{ asset('images/cat_sets.png') }}" alt="Aakrithi - The best boutique for family ethnic wear" loading="lazy"></div>
     </div>
 </div>
 @endsection

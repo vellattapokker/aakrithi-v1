@@ -29,13 +29,13 @@ class ProductController extends Controller
             ];
             $catName = $categoryMap[$category] ?? ucfirst($category);
             $query->where('category', $catName);
-            $title = "$catName | Aakrithi";
-            $meta_description = "Shop $catName at Aakrithi. Our curated collection brings you the finest selection of handpicked artisanal clothing and home decor.";
+            $title = "$catName | Aakrithi Boutique";
+            $meta_description = "Shop the latest $catName at Aakrithi. Our selection features designer ethnic wear, handcrafted sarees, and trendy children's outfits.";
         } else {
-            $meta_description = "Explore the full collection of designer ethnic wear, handloom sarees, and artisanal products at Aakrithi. Find timeless style for every occasion.";
+            $meta_description = "Explore Aakrithi's full range of designer women's ethnic wear, handcrafted sarees, and stylish kids' clothing. Find traditional and modern styles.";
         }
 
-        $meta_keywords = "Aakrithi shop, designer apparel, ethnic wear online, boutique sarees, traditional Indian clothing";
+        $meta_keywords = "Aakrithi shop, designer women's wear, kids ethnic outfits, boutique sarees online, traditional Indian fashion, handcrafted clothing";
 
         // Apply Sorting
         $this->applySorting($query, $sort);
@@ -58,9 +58,9 @@ class ProductController extends Controller
         $catName = $categoryMap[strtolower($slug)] ?? ucfirst(str_replace('-', ' ', $slug));
         
         $query->where('category', $catName);
-        $title = "$catName | Aakrithi";
-        $meta_description = "Shop $catName at Aakrithi. Discover our unique collection of artisanal clothing and home decor handcrafted for elegance.";
-        $meta_keywords = "$catName, Aakrithi collection, Indian ethnic wear, designer sarees, handloom boutique";
+        $title = "$catName | Aakrithi Premium Collection";
+        $meta_description = "Discover our exclusive $catName collection at Aakrithi. Handcrafted ethnic wear and designer children's clothing for every special occasion.";
+        $meta_keywords = "$catName, Aakrithi designer boutique, traditional women's wear, festive kids clothing, artisanal sarees, Indian ethnic fashion online";
 
         // Apply Sorting
         $this->applySorting($query, $sort);
