@@ -16,6 +16,7 @@ class ProductController extends Controller
     public function shop(Request $request)
     {
         $category = $request->get('category');
+        $sort = $request->get('sort', 'latest');
         $query = Product::query();
         $title = 'All Shop';
 
@@ -31,12 +32,16 @@ class ProductController extends Controller
             $title = "Aakrithi $catName";
         }
 
+        // Apply Sorting
+        $this->applySorting($query, $sort);
+
         $products = $query->get();
         return view('shop', compact('products', 'title'));
     }
 
-    public function category($slug)
+    public function category(Request $request, $slug)
     {
+        $sort = $request->get('sort', 'latest');
         $query = Product::query();
         
         $categoryMap = [
@@ -50,8 +55,30 @@ class ProductController extends Controller
         $query->where('category', $catName);
         $title = "Aakrithi $catName";
 
+        // Apply Sorting
+        $this->applySorting($query, $sort);
+
         $products = $query->get();
         return view('shop', compact('products', 'title'));
+    }
+
+    private function applySorting($query, $sort)
+    {
+        switch ($sort) {
+            case 'price-low':
+                $query->orderBy('price', 'asc');
+                break;
+            case 'price-high':
+                $query->orderBy('price', 'desc');
+                break;
+            case 'newest':
+                $query->orderBy('created_at', 'desc');
+                break;
+            case 'latest':
+            default:
+                $query->orderBy('id', 'desc');
+                break;
+        }
     }
 
     public function show($slug)

@@ -35,11 +35,11 @@
         <div class="shop-controls">
             <div class="sort-control">
                 <span>Sort by:</span>
-                <select>
-                    <option>Featured</option>
-                    <option>Price: Low to High</option>
-                    <option>Price: High to Low</option>
-                    <option>Newest</option>
+                <select id="price-sort" onchange="sortProducts(this.value)">
+                    <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }}>Featured</option>
+                    <option value="price-low" {{ request('sort') == 'price-low' ? 'selected' : '' }}>Price: Low to High</option>
+                    <option value="price-high" {{ request('sort') == 'price-high' ? 'selected' : '' }}>Price: High to Low</option>
+                    <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Newest</option>
                 </select>
             </div>
         </div>
@@ -69,4 +69,14 @@
         @endforeach
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+function sortProducts(value) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('sort', value);
+    window.location.href = url.toString();
+}
+</script>
 @endsection
