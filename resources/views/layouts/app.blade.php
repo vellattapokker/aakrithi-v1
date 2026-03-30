@@ -458,61 +458,84 @@
     
     <!-- Preloader Script -->
     <script>
-        // Fade OUT when the new page finishes loading
-        window.addEventListener('load', function() {
-            const loader = document.getElementById('global-loader');
-            if (loader) {
-                loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.visibility = 'hidden';
-                    loader.style.display = 'none';
-                }, 400); // Matches transition duration
-            }
-        });
-
-        // Fade IN instantly when clicking internal links or submitting forms
-        // Fade IN instantly when clicking internal links or submitting forms
-        document.addEventListener('DOMContentLoaded', () => {
+        (function() {
             const loader = document.getElementById('global-loader');
             
-            // Handle browser refresh & general navigation
-            window.addEventListener('beforeunload', () => {
+            function hideLoader() {
+                if (loader) {
+                    loader.style.opacity = '0';
+                    setTimeout(() => {
+                        loader.style.visibility = 'hidden';
+                        loader.style.display = 'none';
+                    }, 400);
+                }
+            }
+
+            function showLoader() {
                 if (loader) {
                     loader.style.display = 'flex';
                     loader.style.visibility = 'visible';
                     loader.style.opacity = '1';
                 }
+            }
+
+            // Hide on initial load
+            window.addEventListener('load', hideLoader);
+
+            // CRITICAL: Hide when navigating back (bfcache restoration)
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted) {
+                    // Page was restored from cache, hide loader immediately
+                    if (loader) {
+                        loader.style.display = 'none';
+                        loader.style.visibility = 'hidden';
+                        loader.style.opacity = '0';
+                    }
+                }
             });
 
-            document.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    const href = this.getAttribute('href');
-                    const target = this.getAttribute('target');
-                    
-                    // Only trigger if it's a valid routing link
-                    if (href && !href.startsWith('#') && !href.startsWith('javascript') && target !== '_blank' && !e.ctrlKey && !e.metaKey) {
-                        if (loader) {
-                            loader.style.display = 'flex';
-                            loader.style.visibility = 'visible';
-                            loader.style.opacity = '1';
+            // Show on navigation
+            document.addEventListener('DOMContentLoaded', () => {
+                // Handle internal links
+                document.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        const href = this.getAttribute('href');
+                        const target = this.getAttribute('target');
+                        
+                        // Ignore hashes, javascript, external targets, and modifier keys
+                        if (href && 
+                            !href.startsWith('#') && 
+                            !href.startsWith('javascript') && 
+                            !href.startsWith('tel:') && 
+                            !href.startsWith('mailto:') && 
+                            target !== '_blank' && 
+                            !e.ctrlKey && 
+                            !e.metaKey && 
+                            !e.shiftKey) {
+                            showLoader();
                         }
-                    }
+                    });
+                });
+
+                // Handle form submissions
+                document.querySelectorAll('form').forEach(form => {
+                    form.addEventListener('submit', function(e) {
+                        const target = this.getAttribute('target');
+                        if (target !== '_blank') {
+                            showLoader();
+                        }
+                    });
                 });
             });
 
-            document.querySelectorAll('form').forEach(form => {
-                form.addEventListener('submit', function(e) {
-                    const target = this.getAttribute('target');
-                    if (target !== '_blank') {
-                        if (loader) {
-                            loader.style.display = 'flex';
-                            loader.style.visibility = 'visible';
-                            loader.style.opacity = '1';
-                        }
-                    }
-                });
+            // Handle browser refresh & generic navigation (less intrusive than beforeunload for bfcache)
+            // But we keep it if they want that "immediate" feel on reload
+            window.addEventListener('beforeunload', () => {
+                // Small delay to check if navigation wasn't cancelled
+                // but usually showing it here is fine as long as we hide it on pageshow
+                showLoader();
             });
-        });
+        })();
     </script>
     
     @yield('scripts')
