@@ -3,6 +3,26 @@
 @section('meta_title', 'Shop Our Collection | Aakrithi Fashion')
 @section('meta_description', 'Browse our exclusive range of Designer Kurthies, Kerala Sets, and Embroidered Sarees. Quality artisanal wear for every occasion.')
 
+@section('structured_data')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ route('home') }}"
+    }, {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "{{ $title ?? 'Shop' }}",
+        "item": "{{ url()->current() }}"
+    }]
+}
+</script>
+@endsection
+
 @section('content')
 <div class="container shop-page">
     <div class="shop-header">

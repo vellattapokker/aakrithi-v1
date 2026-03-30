@@ -16,6 +16,7 @@ class SettingSeeder extends Seeder
             'instagram_url' => 'https://instagram.com/aakrithi',
             'facebook_url' => 'https://facebook.com/aakrithi',
             'twitter_url' => 'https://twitter.com/aakrithi',
+            'google_site_verification' => 'F0wfdSjWJ2bzq63zXHH_uBwOyGmW5_2ITPoYhmZ4QV4',
         ];
 
         foreach ($settings as $key => $value) {

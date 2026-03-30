@@ -8,7 +8,9 @@ if (!function_exists('setting')) {
     {
         return Cache::rememberForever('setting.' . $key, function () use ($key, $default) {
             $setting = Setting::where('key', $key)->first();
-            return $setting ? $setting->value : $default;
+            
+            // Check DB first, then ENV, then default
+            return $setting ? $setting->value : env(strtoupper($key), $default);
         });
     }
 }
