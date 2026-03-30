@@ -44,7 +44,7 @@ class CartController extends Controller
             return redirect()->route('cart')->with('error', 'Your cart is empty!');
         }
 
-        $razorpayKey = env('RAZORPAY_KEY_ID');
+        $razorpayKey = config('services.razorpay.key');
         $addresses = auth()->check() ? auth()->user()->addresses()->orderBy('is_default', 'desc')->get() : collect([]);
 
         return view('checkout', compact('cart', 'total', 'razorpayKey', 'addresses'));
