@@ -48,6 +48,8 @@ Route::get('/account', [AuthController::class, 'showAuth'])->name('account');
 Route::get('/account/dashboard', [AuthController::class, 'dashboard'])->name('account.dashboard')->middleware('auth');
 Route::get('/account/orders', [AuthController::class, 'orders'])->name('account.orders')->middleware('auth');
 Route::get('/account/addresses', [AuthController::class, 'addresses'])->name('account.addresses')->middleware('auth');
+Route::get('/account/profile', [AuthController::class, 'profile'])->name('account.profile')->middleware('auth');
+Route::post('/account/profile', [AuthController::class, 'updateProfile'])->name('account.profile.update')->middleware('auth');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

@@ -49,7 +49,7 @@
                 <a href="{{ route('account.dashboard') }}" class="{{ request()->routeIs('account.dashboard') ? 'active' : '' }}"><i data-lucide="user"></i> Profile Hub</a>
                 <a href="{{ route('account.orders') }}"><i data-lucide="shopping-bag"></i> Order History</a>
                 <a href="{{ route('account.addresses') }}"><i data-lucide="map-pin"></i> Saved Addresses</a>
-                <a href="javascript:alert('Security settings coming soon!')"><i data-lucide="lock"></i> Security</a>
+                <a href="{{ route('account.profile') }}" class="{{ request()->routeIs('account.profile') ? 'active' : '' }}"><i data-lucide="settings"></i> Account Settings</a>
             </nav>
         </aside>
 
@@ -58,7 +58,7 @@
             <a href="{{ route('account.dashboard') }}" class="{{ request()->routeIs('account.dashboard') ? 'active' : '' }}"><i data-lucide="user"></i></a>
             <a href="{{ route('account.orders') }}"><i data-lucide="shopping-bag"></i></a>
             <a href="{{ route('account.addresses') }}"><i data-lucide="map-pin"></i></a>
-            <a href="javascript:alert('Security coming soon!')"><i data-lucide="lock"></i></a>
+            <a href="{{ route('account.profile') }}" class="{{ request()->routeIs('account.profile') ? 'active' : '' }}"><i data-lucide="settings"></i></a>
         </nav>
 
         {{-- Main Content: Unified Profile Hub --}}
