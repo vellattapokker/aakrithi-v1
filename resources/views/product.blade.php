@@ -8,10 +8,10 @@
 @section('structured_data')
 <script type="application/ld+json">
 {
-    "@context": "https://schema.org/",
-    "@graph": [
+    "@@context": "https://schema.org/",
+    "@@graph": [
         {
-            "@type": "Product",
+            "@@type": "Product",
             "@id": "{{ url()->current() }}#product",
             "name": "{{ $product->name }}",
             "image": [
@@ -20,11 +20,11 @@
             "description": "{{ $product->meta_description ?? \Illuminate\Support\Str::limit($product->description, 160) }}",
             "sku": "AAK-{{ $product->id }}",
             "brand": {
-                "@type": "Brand",
+                "@@type": "Brand",
                 "name": "Aakrithi"
             },
             "offers": {
-                "@type": "Offer",
+                "@@type": "Offer",
                 "url": "{{ url()->current() }}",
                 "priceCurrency": "INR",
                 "price": "{{ $product->price }}",
@@ -32,7 +32,7 @@
                 "itemCondition": "https://schema.org/NewCondition",
                 "availability": "https://schema.org/InStock",
                 "hasMerchantReturnPolicy": {
-                    "@type": "MerchantReturnPolicy",
+                    "@@type": "MerchantReturnPolicy",
                     "applicableCountry": "IN",
                     "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnPeriod",
                     "merchantReturnDays": 7,
@@ -40,22 +40,22 @@
                     "returnFees": "https://schema.org/FreeReturn"
                 },
                 "shippingDetails": {
-                    "@type": "OfferShippingDetails",
+                    "@@type": "OfferShippingDetails",
                     "shippingRate": {
-                        "@type": "MonetaryAmount",
+                        "@@type": "MonetaryAmount",
                         "value": 0,
                         "currency": "INR"
                     },
                     "deliveryTime": {
-                        "@type": "ShippingDeliveryTime",
+                        "@@type": "ShippingDeliveryTime",
                         "handlingTime": {
-                            "@type": "QuantitativeValue",
+                            "@@type": "QuantitativeValue",
                             "minValue": 1,
                             "maxValue": 2,
                             "unitCode": "DAY"
                         },
                         "transitTime": {
-                            "@type": "ShippingDeliveryTime",
+                            "@@type": "ShippingDeliveryTime",
                             "minValue": 3,
                             "maxValue": 5,
                             "unitCode": "DAY"
@@ -65,19 +65,19 @@
             }
         },
         {
-            "@type": "BreadcrumbList",
+            "@@type": "BreadcrumbList",
             "itemListElement": [{
-                "@type": "ListItem",
+                "@@type": "ListItem",
                 "position": 1,
                 "name": "Home",
                 "item": "{{ route('home') }}"
             },{
-                "@type": "ListItem",
+                "@@type": "ListItem",
                 "position": 2,
                 "name": "{{ $product->category }}",
                 "item": "{{ route('category', strtolower(str_replace(' ', '-', $product->category))) }}"
             },{
-                "@type": "ListItem",
+                "@@type": "ListItem",
                 "position": 3,
                 "name": "{{ $product->name }}",
                 "item": "{{ url()->current() }}"
