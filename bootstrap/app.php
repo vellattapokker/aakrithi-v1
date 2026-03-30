@@ -40,11 +40,14 @@ return Application::configure(basePath: dirname(__DIR__))
                 );
             });
 
-            // Force logging to stderr for Vercel
+            // Force logging to stderr and use cookie sessions for Vercel
             config([
                 'logging.default' => 'stderr',
                 'view.compiled' => '/tmp/storage/framework/views',
                 'cache.stores.file.path' => '/tmp/storage/framework/cache/data',
+                'session.driver' => 'cookie',
+                'session.secure' => true,
+                'session.same_site' => 'lax',
                 'session.files' => '/tmp/storage/framework/sessions',
             ]);
         }
