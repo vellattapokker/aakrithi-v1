@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+
+    <!-- CRITICAL PRELOADER CSS (MUST BE FIRST) -->
+    <style>
+        #global-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #FEFEE3;
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .loader-brand {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 110px;
+            height: 110px;
+            margin-bottom: 2rem;
+        }
+
+        .loader-logo {
+            width: 70px;
+            height: auto;
+            z-index: 2;
+            animation: pulse-logo 2s ease-in-out infinite;
+        }
+
+        .loader-ring {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid transparent;
+            border-top-color: #C5A059;
+            border-bottom-color: #C5A059;
+            border-radius: 50%;
+            animation: spin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+            opacity: 0.8;
+        }
+        
+        .loader-ring-inner {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: calc(100% - 20px);
+            height: calc(100% - 20px);
+            border: 1px solid transparent;
+            border-left-color: rgba(197, 160, 89, 0.4);
+            border-right-color: rgba(197, 160, 89, 0.4);
+            border-radius: 50%;
+            animation: spin-reverse 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
+
+        .loader-text {
+            color: #C5A059;
+            font-size: 0.85rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-weight: 500;
+            animation: pulse-logo 2s ease-in-out infinite;
+            padding-left: 5px;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes spin-reverse { 100% { transform: rotate(-360deg); } }
+        @keyframes pulse-logo {
+            0%, 100% { transform: scale(0.95); opacity: 0.7; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+    </style>
+
+    <!-- SEO Meta Tags Component -->
+    <?php if (isset($component)) { $__componentOriginal84f9df3f620371229981225e7ba608d7 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal84f9df3f620371229981225e7ba608d7 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.seo-meta','data' => ['title' => trim($__env->yieldContent('meta_title')) ?: setting('site_title', 'Aakrithi | Premium Women\'s Ethnic Wear & Designer Kids clothing Boutique'),'description' => trim($__env->yieldContent('meta_description')) ?: setting('site_description', 'Discover curated artisanal clothing, handcrafted sarees, and trendy kids\' party wear at Aakrithi – your destination for timeless family fashion.'),'keywords' => trim($__env->yieldContent('meta_keywords')) ?: setting('meta_keywords', 'Aakrithi, women\'s ethnic wear online, designer sarees, kids party wear, traditional kids sets, Indian boutique, designer kurtis, sustainable fashion'),'image' => trim($__env->yieldContent('og_image')) ?: (setting('og_image') ?: asset('images/logo.png')),'isNoindex' => trim($__env->yieldContent('is_noindex')) == 'true']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('seo-meta'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['title' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(trim($__env->yieldContent('meta_title')) ?: setting('site_title', 'Aakrithi | Premium Women\'s Ethnic Wear & Designer Kids clothing Boutique')),'description' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(trim($__env->yieldContent('meta_description')) ?: setting('site_description', 'Discover curated artisanal clothing, handcrafted sarees, and trendy kids\' party wear at Aakrithi – your destination for timeless family fashion.')),'keywords' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(trim($__env->yieldContent('meta_keywords')) ?: setting('meta_keywords', 'Aakrithi, women\'s ethnic wear online, designer sarees, kids party wear, traditional kids sets, Indian boutique, designer kurtis, sustainable fashion')),'image' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(trim($__env->yieldContent('og_image')) ?: (setting('og_image') ?: asset('images/logo.png'))),'is-noindex' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(trim($__env->yieldContent('is_noindex')) == 'true')]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal84f9df3f620371229981225e7ba608d7)): ?>
+<?php $attributes = $__attributesOriginal84f9df3f620371229981225e7ba608d7; ?>
+<?php unset($__attributesOriginal84f9df3f620371229981225e7ba608d7); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal84f9df3f620371229981225e7ba608d7)): ?>
+<?php $component = $__componentOriginal84f9df3f620371229981225e7ba608d7; ?>
+<?php unset($__componentOriginal84f9df3f620371229981225e7ba608d7); ?>
+<?php endif; ?>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "name": "<?php echo e(setting('site_title', 'Aakrithi')); ?>",
+                "url": "<?php echo e(url('/')); ?>",
+                "logo": "<?php echo e(asset('images/logo.png')); ?>",
+                "sameAs": [
+                    "<?php echo e(setting('instagram_url', '#')); ?>",
+                    "<?php echo e(setting('facebook_url', '#')); ?>",
+                    "<?php echo e(setting('twitter_url', '#')); ?>"
+                ]
+            },
+            {
+                "@type": "WebSite",
+                "name": "<?php echo e(setting('site_title', 'Aakrithi')); ?>",
+                "url": "<?php echo e(url('/')); ?>"
+            }
+        ]
+    }
+    </script>
+    <?php echo $__env->yieldContent('structured_data'); ?>
+
+    <?php if(setting('google_site_verification')): ?>
+    <!-- Google Search Console -->
+    <meta name="google-site-verification" content="<?php echo e(setting('google_site_verification')); ?>" />
+    <?php endif; ?>
+
+    <?php if(setting('google_analytics_id')): ?>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo e(setting('google_analytics_id')); ?>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '<?php echo e(setting('google_analytics_id')); ?>');
+    </script>
+    <?php endif; ?>
+
+    <link rel="stylesheet" href="<?php echo e(asset('css/app.css')); ?>?v=1.1.6">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* CRITICAL MOBILE FIX (BYPASS CACHE) */
+        @media (max-width: 992px) {
+            /* Force navbar above backdrop when menu is open */
+            #navbar:has(#navLinks.open),
+            .navbar:has(.navbar-links.open) {
+                z-index: 10000 !important;
+            }
+
+            #navLinks.open {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important; /* CENTERED */
+                background: #FEFEE3 !important; /* Page BG */
+                z-index: 10001 !important;
+                position: fixed !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                border-right: 1px solid #E0E0C0 !important;
+                box-shadow: 15px 0 40px rgba(0,0,0,0.08) !important;
+                padding-top: 2rem !important;
+            }
+            .mobile-nav-logo-item {
+                display: block !important;
+                margin-bottom: 2rem !important;
+                text-align: center !important;
+            }
+            .mobile-nav-logo-item img {
+                height: 60px !important; /* BIGGER LOGO */
+                width: auto !important;
+            }
+            #navLinks:not(.open) .mobile-nav-logo-item {
+                display: none !important;
+            }
+            #navLinks.open li a {
+                text-align: center !important;
+                align-items: center !important;
+            }
+            #navLinks.open, #navLinks.open * {
+                color: #465362 !important;
+                opacity: 1 !important;
+                text-decoration: none !important;
+                -webkit-font-smoothing: antialiased;
+                text-shadow: none !important;
+                backdrop-filter: none !important;
+            }
+            .navbar-links.open .nav-brand {
+                opacity: 0.7 !important;
+                text-align: center !important;
+            }
+            .mobile-menu-backdrop {
+                z-index: 9000 !important; /* Backdrop stays below navbar-open */
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                background: rgba(0,0,0,0.3) !important;
+            }
+        }
+        
+        /* Search Overlay - Premium Discovery Hub */
+        .search-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(254, 254, 227, 0.98); backdrop-filter: blur(40px);
+            z-index: 10000; display: none; opacity: 0; transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            align-items: center; justify-content: center;
+        }
+        .search-overlay.active { display: flex; opacity: 1; }
+        .search-container { width: 90%; max-width: 900px; position: relative; text-align: center; }
+        .search-close { position: absolute; top: -100px; right: 0; color: #465362; cursor: pointer; border: 1.5px solid #E0E0C0; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: all 0.4s; }
+        .search-close:hover { border-color: var(--color-accent); color: var(--color-accent); transform: rotate(90deg) scale(1.1); }
+        
+        .search-input-wrapper { display: flex; align-items: center; border-bottom: 2px solid #C5A059; padding: 1.5rem 0; gap: 2rem; transform: translateY(20px); opacity: 0; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+        .search-overlay.active .search-input-wrapper { transform: translateY(0); opacity: 1; }
+        
+        .search-icon-inside { color: var(--color-accent); width: 40px; height: 40px; }
+        .search-input-wrapper input { background: transparent; border: none; font-size: clamp(1.5rem, 4vw, 3.5rem); font-family: var(--font-family); color: #465362; width: 100%; outline: none; font-weight: 300; letter-spacing: -1px; }
+        .search-input-wrapper input::placeholder { color: #E0E0C0; }
+
+        .discovery-hub { margin-top: 4rem; text-align: left; transform: translateY(30px); opacity: 0; transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.1s; }
+        .search-overlay.active .discovery-hub { transform: translateY(0); opacity: 1; }
+        
+        .discovery-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 4px; color: var(--color-accent); font-weight: 700; margin-bottom: 2rem; display: block; }
+        
+        .discovery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        .discovery-item { background: rgba(255,255,255,0.4); border: 1px solid var(--color-border); padding: 2rem 1rem; border-radius: 16px; text-align: center; transition: all 0.4s; cursor: pointer; text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+        .discovery-item:hover { background: #fff; border-color: var(--color-accent); transform: translateY(-10px); box-shadow: 0 20px 40px rgba(197, 160, 89, 0.1); }
+        .discovery-item i { width: 32px; height: 32px; color: var(--color-accent); }
+        .discovery-item span { font-weight: 600; font-size: 0.9rem; color: #465362; }
+
+        .search-hints-premium { margin-top: 2rem; display: flex; gap: 1.5rem; align-items: center; font-size: 0.95rem; color: #465362; opacity: 0; transition: opacity 1s ease 0.3s; }
+        .search-overlay.active .search-hints-premium { opacity: 0.7; }
+        .search-hint-link { text-decoration: none; color: var(--color-accent); font-weight: 600; cursor: pointer; border-bottom: 1px solid transparent; transition: all 0.3s; }
+        .search-hint-link:hover { border-bottom-color: var(--color-accent); padding-bottom: 2px; }
+
+        @media (max-width: 768px) {
+            .discovery-grid { grid-template-columns: 1fr 1fr; }
+            .search-close { top: -80px; }
+            .search-input-wrapper { gap: 1rem; }
+            .discovery-hub { margin-top: 3rem; }
+        }
+
+        /* LIGHT THEME FOOTER FIX (GLOBAL) */
+        .footer {
+            background: #F8F9FA !important;
+            border-top: 1px solid #EEEEEE !important;
+        }
+        .footer h3, .footer h4, .footer p, .footer a, .footer li, .footer button, .footer input {
+            color: #465362 !important;
+        }
+        .footer-links a, .footer-brand p, .footer-bottom p {
+            opacity: 0.8 !important;
+        }
+        .newsletter-form {
+            border-bottom: 1px solid rgba(70, 83, 98, 0.2) !important;
+        }
+        /* Global Preloader - Premium Design - Moved to head for critical path */
+    </style>
+    <?php echo $__env->yieldContent('styles'); ?>
+</head>
+<body>
+    <!-- Premium Global Preloader -->
+    <div id="global-loader">
+        <div class="loader-brand">
+            <div class="loader-ring"></div>
+            <div class="loader-ring-inner"></div>
+            <img src="<?php echo e(asset('images/logo.png')); ?>" alt="Aakrithi" class="loader-logo">
+        </div>
+        <div class="loader-text">Aakrithi</div>
+    </div>
+
+    
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-container">
+            <button class="search-close" id="searchCloseBtn"><i data-lucide="x"></i></button>
+            
+            <div class="search-input-wrapper">
+                <i data-lucide="search" class="search-icon-inside"></i>
+                <input type="text" id="searchInputField" placeholder="Discover artisanal style..." autocomplete="off">
+            </div>
+
+            <div class="search-hints-premium">
+                <span>Trending:</span>
+                <a href="javascript:void(0)" class="search-hint-link" onclick="executeSearch('Silk Saree')">Silk Saree</a>
+                <a href="javascript:void(0)" class="search-hint-link" onclick="executeSearch('Linen')">Linen</a>
+                <a href="javascript:void(0)" class="search-hint-link" onclick="executeSearch('Home Decor')">Home Decor</a>
+            </div>
+
+            <div class="discovery-hub">
+                <span class="discovery-label">Curated Collections</span>
+                <div class="discovery-grid">
+                    <a href="<?php echo e(route('category', 'apparels')); ?>" class="discovery-item">
+                        <i data-lucide="shirt"></i>
+                        <span>Apparels</span>
+                    </a>
+                    <a href="<?php echo e(route('category', 'kutties')); ?>" class="discovery-item">
+                        <i data-lucide="baby"></i>
+                        <span>Kutties</span>
+                    </a>
+                    <a href="<?php echo e(route('category', 'decors')); ?>" class="discovery-item">
+                        <i data-lucide="home"></i>
+                        <span>Decors</span>
+                    </a>
+                    <a href="<?php echo e(route('category', 'boutique')); ?>" class="discovery-item">
+                        <i data-lucide="scissors"></i>
+                        <span>Boutique</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <nav class="navbar" id="navbar">
+        <div class="container navbar-content">
+            <button class="mobile-menu-toggle" id="menuToggle">
+                <i data-lucide="menu" id="menuIcon"></i>
+            </button>
+
+            <a href="<?php echo e(route('home')); ?>" class="navbar-logo"><img src="<?php echo e(asset('images/logo.png')); ?>" alt="Aakrithi"></a>
+
+            <ul class="navbar-links" id="navLinks">
+                <li class="mobile-nav-logo-item"><a href="<?php echo e(route('home')); ?>"><img src="<?php echo e(asset('images/logo.png')); ?>" alt="Aakrithi"></a></li>
+                <li><a href="<?php echo e(route('category', 'apparels')); ?>"><span class="nav-brand">Aakrithi</span><span class="nav-category">Apparels</span></a></li>
+                <li><a href="<?php echo e(route('category', 'kutties')); ?>"><span class="nav-brand">Aakrithi</span><span class="nav-category">Kutties</span></a></li>
+                <li><a href="<?php echo e(route('category', 'decors')); ?>"><span class="nav-brand">Aakrithi</span><span class="nav-category">Decors</span></a></li>
+                <li><a href="<?php echo e(route('category', 'boutique')); ?>"><span class="nav-brand">Aakrithi</span><span class="nav-category">Boutique & Designs</span></a></li>
+            </ul>
+
+            <div class="navbar-actions">
+                <button class="nav-action-btn" id="searchToggleBtn" title="Search Collection"><i data-lucide="search"></i></button>
+                <?php if(auth()->guard()->check()): ?>
+                    <div class="nav-user-dropdown">
+                        <a href="<?php echo e(route('account')); ?>" class="nav-action-btn"><i data-lucide="user"></i></a>
+                        <div class="dropdown-content">
+                            <span class="user-greeting">Hi, <?php echo e(Auth::user()->name); ?></span>
+                            <hr>
+                            <form method="POST" action="<?php echo e(route('logout')); ?>">
+                                <?php echo csrf_field(); ?>
+                                <button type="submit" class="logout-btn"><i data-lucide="log-out"></i> Logout</button>
+                            </form>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <a href="<?php echo e(route('account')); ?>" class="nav-action-btn"><i data-lucide="user"></i></a>
+                <?php endif; ?>
+                <a href="<?php echo e(route('wishlist')); ?>" class="nav-action-btn wishlist-icon" style="position:relative">
+                    <i data-lucide="heart"></i>
+                    <?php ($wishlist_count = session('wishlist') ? count(session('wishlist')) : 0); ?>
+                    <span class="cart-count" id="wishlistCount" style="background: var(--premium-accent, #C5A059); display: <?php echo e($wishlist_count > 0 ? 'flex' : 'none'); ?>;"><?php echo e($wishlist_count); ?></span>
+                </a>
+
+
+                <a href="<?php echo e(route('cart')); ?>" class="nav-action-btn cart-icon" style="position:relative">
+                    <i data-lucide="shopping-bag"></i>
+                    <?php ($cart_count = session('cart') ? count(session('cart')) : 0); ?>
+                    <span class="cart-count" id="cartCount"><?php echo e($cart_count); ?></span>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="mobile-menu-backdrop" id="menuBackdrop"></div>
+
+    
+    <main style="padding-top: var(--header-height);">
+        <?php echo $__env->yieldContent('content'); ?>
+    </main>
+
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>AAKRITHI</h3>
+                    <p>Curated artisanal clothing designed for comfort and elegance. Blending traditional Indian craftsmanship with modern silhouettes.</p>
+                    <div class="social-links">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a>
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16zM4 20l6.768 -6.768M15.232 10.232l4.768 -6.232"/></svg></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="<?php echo e(route('category', 'apparels')); ?>">Apparels</a></li>
+                        <li><a href="<?php echo e(route('category', 'kutties')); ?>">Kutties</a></li>
+                        <li><a href="<?php echo e(route('category', 'decors')); ?>">Decors</a></li>
+                        <li><a href="<?php echo e(route('category', 'boutique')); ?>">Boutique</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Info</h4>
+                    <ul>
+                        <li><a href="<?php echo e(route('about')); ?>">Our Story</a></li>
+                        <li><a href="<?php echo e(route('contact')); ?>">Contact</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Returns</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Newsletter</h4>
+                    <p style="color:#A0A5AB; font-size:0.875rem; margin-bottom:1rem;">Subscribe for exclusive updates and offers.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address">
+                        <button type="submit"><i data-lucide="arrow-right"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <?php echo e(date('Y')); ?> Aakrithi. All rights reserved.</p>
+                <div class="payment-icons">
+                    <span>Visa</span> <span>Mastercard</span> <span>UPI</span> <span>Net Banking</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="<?php echo e(asset('js/app.js')); ?>?v=1.0.6"></script>
+    <script>
+        lucide.createIcons();
+
+        // Search Interface - Premium Integration
+        const searchOverlay = document.getElementById('searchOverlay');
+        const searchToggleBtn = document.getElementById('searchToggleBtn');
+        const searchCloseBtn = document.getElementById('searchCloseBtn');
+        const searchInputField = document.getElementById('searchInputField');
+
+        function toggleSearch(show) {
+            if (show) {
+                searchOverlay.style.display = 'flex';
+                setTimeout(() => {
+                    searchOverlay.classList.add('active');
+                    searchInputField.focus();
+                }, 10);
+            } else {
+                searchOverlay.classList.remove('active');
+                setTimeout(() => searchOverlay.style.display = 'none', 400);
+            }
+        }
+
+        searchToggleBtn.addEventListener('click', () => toggleSearch(true));
+        searchCloseBtn.addEventListener('click', () => toggleSearch(false));
+        
+        // Close on ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && searchOverlay.classList.contains('active')) toggleSearch(false);
+        });
+
+        // Search Logic
+        function executeSearch(query) {
+            const q = query || searchInputField.value.trim();
+            if (q) window.location.href = `/shop?category=all&sort=latest&search=${encodeURIComponent(q)}`;
+        }
+
+        searchInputField.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') executeSearch();
+        });
+    </script>
+    
+    <!-- Preloader Script -->
+    <script>
+        (function() {
+            const loader = document.getElementById('global-loader');
+            
+            function hideLoader() {
+                if (loader) {
+                    loader.style.opacity = '0';
+                    setTimeout(() => {
+                        loader.style.visibility = 'hidden';
+                        loader.style.display = 'none';
+                    }, 400);
+                }
+            }
+
+            function showLoader() {
+                if (loader) {
+                    loader.style.display = 'flex';
+                    loader.style.visibility = 'visible';
+                    loader.style.opacity = '1';
+                }
+            }
+
+            // Hide on initial load
+            window.addEventListener('load', hideLoader);
+
+            // CRITICAL: Hide when navigating back (bfcache restoration)
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted) {
+                    // Page was restored from cache, hide loader immediately
+                    if (loader) {
+                        loader.style.display = 'none';
+                        loader.style.visibility = 'hidden';
+                        loader.style.opacity = '0';
+                    }
+                }
+            });
+
+            // Show on navigation
+            document.addEventListener('DOMContentLoaded', () => {
+                // Handle internal links
+                document.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        const href = this.getAttribute('href');
+                        const target = this.getAttribute('target');
+                        
+                        // Ignore hashes, javascript, external targets, and modifier keys
+                        if (href && 
+                            !href.startsWith('#') && 
+                            !href.startsWith('javascript') && 
+                            !href.startsWith('tel:') && 
+                            !href.startsWith('mailto:') && 
+                            target !== '_blank' && 
+                            !e.ctrlKey && 
+                            !e.metaKey && 
+                            !e.shiftKey) {
+                            showLoader();
+                        }
+                    });
+                });
+
+                // Handle form submissions
+                document.querySelectorAll('form').forEach(form => {
+                    form.addEventListener('submit', function(e) {
+                        const target = this.getAttribute('target');
+                        if (target !== '_blank') {
+                            showLoader();
+                        }
+                    });
+                });
+            });
+
+            // Handle browser refresh & generic navigation (less intrusive than beforeunload for bfcache)
+            // But we keep it if they want that "immediate" feel on reload
+            window.addEventListener('beforeunload', () => {
+                // Small delay to check if navigation wasn't cancelled
+                // but usually showing it here is fine as long as we hide it on pageshow
+                showLoader();
+            });
+        })();
+    </script>
+    
+    <?php echo $__env->yieldContent('scripts'); ?>
+    
+    <script>
+        function addToWishlist(id) {
+            fetch(`/add-to-wishlist/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    const countSpan = document.getElementById('wishlistCount');
+                    if (countSpan) {
+                        countSpan.innerText = data.count;
+                        countSpan.style.display = 'flex';
+                    }
+                    alert(data.message);
+                });
+        }
+    </script>
+</body>
+</html>
+<?php /**PATH D:\New folder\Git uploads\aakrithi-v1\resources\views/layouts/app.blade.php ENDPATH**/ ?>
