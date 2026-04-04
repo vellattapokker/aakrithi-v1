@@ -90,17 +90,33 @@ function showToast(message) {
     }, 2000);
 }
 
-// Scroll reveal animation
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+// Robust Scroll Reveal System
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in-up');
-            observer.unobserve(entry.target);
+            // Add a staggered delay based on elements appearing at the same time
+            const delay = (index % 4) * 100;
+            setTimeout(() => {
+                entry.target.classList.add('active');
+                revealObserver.unobserve(entry.target);
+            }, delay);
         }
     });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.product-card, .category-item, .value-card').forEach(el => {
-    el.style.opacity = '0';
-    observer.observe(el);
+}, { 
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px' 
 });
+
+// Initialize reveal elements
+function initReveal() {
+    const revealElements = document.querySelectorAll('.reveal, .reveal-up, .reveal-blur, .reveal-scale, .product-card, .category-item, .value-card, .feature-card, .landing-option');
+    revealElements.forEach(el => {
+        if (!el.classList.contains('active')) {
+            revealObserver.observe(el);
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initReveal);
+// Re-init on dynamic content if necessary
+window.addEventListener('load', initReveal);

@@ -8,7 +8,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
-Route::get('/', [ProductController::class, 'home'])->name('home');
+Route::get('/', fn() => view('landing'))->name('landing');
+Route::get('/boutique', [ProductController::class, 'home'])->name('home');
+Route::get('/wholesale', [ProductController::class, 'wholesale'])->name('wholesale');
+Route::get('/wholesale/product/{slug}', [ProductController::class, 'wholesaleShow'])->name('wholesale.product');
+Route::get('/wholesale/cart', [CartController::class, 'wholesaleIndex'])->name('wholesale.cart');
+Route::get('/wholesale/add/{id}', [CartController::class, 'wholesaleAdd'])->name('wholesale.cart.add');
+Route::get('/wholesale/checkout', [CartController::class, 'wholesaleCheckout'])->name('wholesale.checkout');
+Route::delete('/wholesale/remove', [CartController::class, 'wholesaleRemove'])->name('wholesale.cart.remove');
+Route::patch('/wholesale/update', [CartController::class, 'wholesaleUpdate'])->name('wholesale.cart.update');
 Route::get('/shop', [ProductController::class, 'shop'])->name('shop');
 Route::get('/category/{slug}', [ProductController::class, 'category'])->name('category');
 Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product');

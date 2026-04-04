@@ -1,30 +1,34 @@
 @extends('layouts.app')
+@section('body_class', 'home-page')
 @section('meta_title', setting('site_title', 'Aakrithi | Premium Women\'s Ethnic Wear & Designer Kids clothing Boutique'))
 @section('meta_description', setting('site_description', 'Shop Aakrithi for designer women\'s ethnic wear, handcrafted sarees, and trendy kids\' party wear. Discover a curated collection of traditional Indian clothing and artisanal fashion for the entire family.'))
 @section('meta_keywords', setting('meta_keywords', 'Aakrithi, women\'s ethnic wear, designer sarees online, kids party wear, traditional kids sets, newborn baby clothes, designer kurtis, Indian boutique, sustainable fashion India'))
 
 @section('content')
 {{-- Hero --}}
-<section class="hero">
-    <div class="hero-content fade-in-up">
-        <h1 class="hero-title">Premium Women's Ethnic Wear & Designer Kids Clothing</h1>
-        <p class="hero-description">Discover our curated collection of artisanal clothing designed for comfort and elegance.</p>
-        <div class="hero-actions">
-            <a href="{{ route('shop') }}" class="btn-primary">Shop Collection <i data-lucide="arrow-right"></i></a>
-            <a href="{{ route('about') }}" class="btn-secondary">Explore Stories</a>
+<section class="hero cinematic-hero" style="background: url('{{ asset('images/boutique-hero.png') }}') no-repeat center center; background-size: cover; height: 80vh; position: relative;">
+    <div class="hero-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(7, 40, 33, 0.4), rgba(7, 40, 33, 0.9));"></div>
+    <div class="container h-100 d-flex flex-column align-items-center justify-content-center text-center position-relative" style="z-index: 2;">
+        <div class="hero-content reveal-blur">
+            <h1 class="hero-title reveal-up" style="font-family: var(--font-serif); font-size: clamp(2.5rem, 8vw, 5rem); line-height: 1.1; color: #FEFEE3;">Artisanal Heritage, <br>Modern Elegance</h1>
+            <p class="hero-description reveal-up reveal-delay-1" style="font-size: 1.2rem; max-width: 600px; margin: 1.5rem auto; opacity: 0.8;">Discover our curated collection of handcrafted ethnic wear and designer apparel.</p>
+            <div class="hero-actions reveal-up reveal-delay-2 mt-4">
+                <a href="{{ route('shop') }}" class="btn-primary" style="padding: 1rem 2.5rem; text-decoration: none; border-radius: 40px; display: inline-block;">Explore Collection <i data-lucide="arrow-right"></i></a>
+            </div>
         </div>
     </div>
 </section>
 
 {{-- Categories --}}
-<div class="container">
-    <div class="section-header">
+<div class="container" style="padding: 8rem 1rem;">
+    <div class="section-header reveal-up mb-5 flex-column flex-md-row text-center text-md-start gap-3">
         <div>
-            <h2>Shop by Category</h2>
+            <h2 style="font-family: var(--font-serif); font-size: clamp(2rem, 8vw, 3rem);">Shop by Category</h2>
+            <p style="opacity:0.7;">Curated masterpieces across tradition</p>
         </div>
-        <a href="{{ route('shop') }}">View All</a>
+        <a href="{{ route('shop') }}" class="btn-outline-light px-4 py-2" style="text-decoration:none;">View All</a>
     </div>
-    <div class="categories-grid">
+    <div class="categories-grid mb-5" style="gap: 3rem;">
         <a href="{{ route('category', 'apparels') }}" class="category-item">
             <img src="{{ asset('images/cat_dresses.png') }}" alt="Designer Kurthies and Ethnic Tops | Aakrithi Collection" loading="lazy">
             <div class="category-overlay">Designer Kurthies</div>

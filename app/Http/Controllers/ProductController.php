@@ -13,6 +13,19 @@ class ProductController extends Controller
         return view('home', compact('products'));
     }
 
+    public function wholesale()
+    {
+        $products = Product::all();
+        $title = 'Wholesale Hub | Aakrithi Artisanal B2B';
+        return view('wholesale', compact('products', 'title'));
+    }
+
+    public function wholesaleShow($slug)
+    {
+        $product = Product::where('slug', $slug)->firstOrFail();
+        return view('wholesale-product', compact('product'));
+    }
+
     public function shop(Request $request)
     {
         $category = $request->get('category');
@@ -25,7 +38,6 @@ class ProductController extends Controller
                 'apparels' => 'Designer Apparels & Ethnic Wear',
                 'kutties' => 'Kutties Collection - Traditional Kids Wear',
                 'decors' => 'Handloom Home Decors & Embroidered Sarees',
-                'boutique' => 'Custom Boutique & Designer Studio',
             ];
             $catName = $categoryMap[$category] ?? ucfirst($category);
             $query->where('category', $catName);
@@ -53,7 +65,6 @@ class ProductController extends Controller
             'apparels' => 'Designer Apparels & Ethnic Wear',
             'kutties' => 'Kutties Collection - Traditional Kids Wear',
             'decors' => 'Handloom Home Decors & Embroidered Sarees',
-            'boutique' => 'Custom Boutique & Designer Studio',
         ];
         $catName = $categoryMap[strtolower($slug)] ?? ucfirst(str_replace('-', ' ', $slug));
         

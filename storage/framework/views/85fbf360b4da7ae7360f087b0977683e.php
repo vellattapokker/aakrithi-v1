@@ -1,3 +1,6 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +17,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: #FEFEE3;
+            background: var(--color-background);
             z-index: 999999;
             display: flex;
             flex-direction: column;
@@ -49,8 +52,8 @@
             width: 100%;
             height: 100%;
             border: 2px solid transparent;
-            border-top-color: #C5A059;
-            border-bottom-color: #C5A059;
+            border-top-color: var(--color-accent);
+            border-bottom-color: var(--color-accent);
             border-radius: 50%;
             animation: spin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
             opacity: 0.8;
@@ -63,14 +66,14 @@
             width: calc(100% - 20px);
             height: calc(100% - 20px);
             border: 1px solid transparent;
-            border-left-color: rgba(197, 160, 89, 0.4);
-            border-right-color: rgba(197, 160, 89, 0.4);
+            border-left-color: rgba(120, 120, 120, 0.2);
+            border-right-color: rgba(120, 120, 120, 0.2);
             border-radius: 50%;
             animation: spin-reverse 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
         }
 
         .loader-text {
-            color: #C5A059;
+            color: var(--color-accent);
             font-size: 0.85rem;
             letter-spacing: 5px;
             text-transform: uppercase;
@@ -151,6 +154,7 @@
     </script>
     <?php endif; ?>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo e(asset('css/app.css')); ?>?v=1.1.6">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -166,7 +170,7 @@
                 display: flex !important;
                 flex-direction: column !important;
                 align-items: center !important; /* CENTERED */
-                background: #FEFEE3 !important; /* Page BG */
+                background: var(--color-background) !important; /* Page BG */
                 z-index: 10001 !important;
                 position: fixed !important;
                 visibility: visible !important;
@@ -192,7 +196,7 @@
                 align-items: center !important;
             }
             #navLinks.open, #navLinks.open * {
-                color: #465362 !important;
+                color: var(--color-text) !important;
                 opacity: 1 !important;
                 text-decoration: none !important;
                 -webkit-font-smoothing: antialiased;
@@ -214,7 +218,7 @@
         /* Search Overlay - Premium Discovery Hub */
         .search-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(254, 254, 227, 0.98); backdrop-filter: blur(40px);
+            background: var(--color-background); opacity: 0.98; backdrop-filter: blur(40px);
             z-index: 10000; display: none; opacity: 0; transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             align-items: center; justify-content: center;
         }
@@ -253,25 +257,11 @@
             .discovery-hub { margin-top: 3rem; }
         }
 
-        /* LIGHT THEME FOOTER FIX (GLOBAL) */
-        .footer {
-            background: #F8F9FA !important;
-            border-top: 1px solid #EEEEEE !important;
-        }
-        .footer h3, .footer h4, .footer p, .footer a, .footer li, .footer button, .footer input {
-            color: #465362 !important;
-        }
-        .footer-links a, .footer-brand p, .footer-bottom p {
-            opacity: 0.8 !important;
-        }
-        .newsletter-form {
-            border-bottom: 1px solid rgba(70, 83, 98, 0.2) !important;
-        }
         /* Global Preloader - Premium Design - Moved to head for critical path */
     </style>
     <?php echo $__env->yieldContent('styles'); ?>
 </head>
-<body>
+<body class="<?php echo $__env->yieldContent('body_class'); ?>">
     <!-- Premium Global Preloader -->
     <div id="global-loader">
         <div class="loader-brand">
@@ -314,10 +304,6 @@
                         <i data-lucide="home"></i>
                         <span>Decors</span>
                     </a>
-                    <a href="<?php echo e(route('category', 'boutique')); ?>" class="discovery-item">
-                        <i data-lucide="scissors"></i>
-                        <span>Boutique</span>
-                    </a>
                 </div>
             </div>
         </div>
@@ -330,14 +316,13 @@
                 <i data-lucide="menu" id="menuIcon"></i>
             </button>
 
-            <a href="<?php echo e(route('home')); ?>" class="navbar-logo"><img src="<?php echo e(asset('images/logo.png')); ?>" alt="Aakrithi"></a>
+            <a href="<?php echo e(route('landing')); ?>" class="navbar-logo" style="font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: #FEFEE3; letter-spacing: 0.1em; text-transform: uppercase;">AAKRITHI</a>
 
             <ul class="navbar-links" id="navLinks">
-                <li class="mobile-nav-logo-item"><a href="<?php echo e(route('home')); ?>"><img src="<?php echo e(asset('images/logo.png')); ?>" alt="Aakrithi"></a></li>
+                <li class="mobile-nav-logo-item" style="padding: 2rem 0; text-align: center;"><a href="<?php echo e(route('landing')); ?>" style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: #FEFEE3; letter-spacing: 0.1em; text-transform: uppercase;">AAKRITHI</a></li>
                 <li><a href="<?php echo e(route('category', 'apparels')); ?>"><span class="nav-brand">Aakrithi</span><span class="nav-category">Apparels</span></a></li>
                 <li><a href="<?php echo e(route('category', 'kutties')); ?>"><span class="nav-brand">Aakrithi</span><span class="nav-category">Kutties</span></a></li>
                 <li><a href="<?php echo e(route('category', 'decors')); ?>"><span class="nav-brand">Aakrithi</span><span class="nav-category">Decors</span></a></li>
-                <li><a href="<?php echo e(route('category', 'boutique')); ?>"><span class="nav-brand">Aakrithi</span><span class="nav-category">Boutique & Designs</span></a></li>
             </ul>
 
             <div class="navbar-actions">
@@ -355,16 +340,16 @@
                         </div>
                     </div>
                 <?php else: ?>
-                    <a href="<?php echo e(route('account')); ?>" class="nav-action-btn"><i data-lucide="user"></i></a>
+                    <a href="<?php echo e(route('account')); ?>" class="nav-action-btn hide-mobile"><i data-lucide="user"></i></a>
                 <?php endif; ?>
-                <a href="<?php echo e(route('wishlist')); ?>" class="nav-action-btn wishlist-icon" style="position:relative">
+                <a href="<?php echo e(route('wishlist')); ?>" class="nav-action-btn wishlist-icon hide-mobile" style="position:relative">
                     <i data-lucide="heart"></i>
                     <?php ($wishlist_count = session('wishlist') ? count(session('wishlist')) : 0); ?>
-                    <span class="cart-count" id="wishlistCount" style="background: var(--premium-accent, #C5A059); display: <?php echo e($wishlist_count > 0 ? 'flex' : 'none'); ?>;"><?php echo e($wishlist_count); ?></span>
+                    <span class="cart-count" id="wishlistCount" style="background: var(--color-accent); display: <?php echo e($wishlist_count > 0 ? 'flex' : 'none'); ?>;"><?php echo e($wishlist_count); ?></span>
                 </a>
 
 
-                <a href="<?php echo e(route('cart')); ?>" class="nav-action-btn cart-icon" style="position:relative">
+                <a href="<?php echo e(request()->is('wholesale*') ? route('wholesale.cart') : route('cart')); ?>" class="nav-action-btn cart-icon" style="position:relative">
                     <i data-lucide="shopping-bag"></i>
                     <?php ($cart_count = session('cart') ? count(session('cart')) : 0); ?>
                     <span class="cart-count" id="cartCount"><?php echo e($cart_count); ?></span>
@@ -398,7 +383,6 @@
                         <li><a href="<?php echo e(route('category', 'apparels')); ?>">Apparels</a></li>
                         <li><a href="<?php echo e(route('category', 'kutties')); ?>">Kutties</a></li>
                         <li><a href="<?php echo e(route('category', 'decors')); ?>">Decors</a></li>
-                        <li><a href="<?php echo e(route('category', 'boutique')); ?>">Boutique</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">

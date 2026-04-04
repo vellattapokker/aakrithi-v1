@@ -101,4 +101,82 @@ class CartController extends Controller
             session()->flash('success', 'Cart updated successfully');
         }
     }
+
+    public function wholesaleIndex()
+    {
+        $cart = session()->get('wholesale_cart', []);
+        $total = array_reduce($cart, function($carry, $item) {
+            return $carry + ($item['price'] * $item['quantity']);
+        }, 0);
+        $totalQuantity = array_reduce($cart, function($carry, $item) {
+            return $carry + $item['quantity'];
+        }, 0);
+
+        return view('wholesale-cart', compact('cart', 'total', 'totalQuantity'));
+    }
+
+    public function wholesaleAdd(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        $cart = session()->get('wholesale_cart', []);
+        $qtyToAdd = $request->query('quantity', 6);
+
+        if(isset($cart[$id])) {
+            $cart[$id]['quantity'] += $qtyToAdd;
+        } else {
+            $cart[$id] = [
+                "name" => $product->name,
+                "quantity" => (int)$qtyToAdd,
+                "price" => $product->price,
+                "image" => $product->image,
+                "category" => $product->category
+            ];
+        }
+
+        session()->put('wholesale_cart', $cart);
+
+        return redirect()->route('wholesale.cart')->with('success', 'Item added to wholesale cart!');
+    }
+
+    public function wholesaleRemove(Request $request)
+    {
+        if($request->id) {
+            $cart = session()->get('wholesale_cart');
+            if(isset($cart[$request->id])) {
+                unset($cart[$request->id]);
+                session()->put('wholesale_cart', $cart);
+            }
+            session()->flash('success', 'Product removed successfully');
+        }
+    }
+
+    public function wholesaleUpdate(Request $request)
+    {
+        if($request->id && $request->quantity){
+            $cart = session()->get('wholesale_cart');
+            $cart[$request->id]["quantity"] = $request->quantity;
+            session()->put('wholesale_cart', $cart);
+            session()->flash('success', 'Cart updated successfully');
+        }
+    }
+
+    public function wholesaleCheckout()
+    {
+        $cart = session()->get('wholesale_cart', []);
+        $totalQuantity = array_reduce($cart, function($carry, $item) {
+            return $carry + $item['quantity'];
+        }, 0);
+
+        if ($totalQuantity < 6) {
+            return redirect()->route('wholesale.cart')->with('error', 'Minimum 6 items required for wholesale orders!');
+        }
+
+        $total = array_reduce($cart, function($carry, $item) {
+            return $carry + ($item['price'] * $item['quantity']);
+        }, 0);
+
+        $addresses = auth()->check() ? auth()->user()->addresses()->orderBy('is_default', 'desc')->get() : collect([]);
+
+        return view('wholesale-checkout', compact('cart', 'total', 'totalQuantity', 'addresses'));
+    }
 }
