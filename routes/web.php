@@ -30,6 +30,8 @@ Route::get('/add-to-cart/{id}', [CartController::class, 'add'])->name('cart.add'
 Route::patch('/update-cart', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/remove-from-cart', [CartController::class, 'remove'])->name('cart.remove');
 
+Route::get('/shipping/check-pincode', [\App\Http\Controllers\ShippingController::class, 'checkPincode'])->name('shipping.check');
+
 // Wishlist Routes
 use App\Http\Controllers\WishlistController;
 Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist');

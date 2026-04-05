@@ -57,6 +57,18 @@
                     <p class="moq-reminder">Initial pack starts at 6 pieces.</p>
                 </div>
 
+                <div class="delivery-check" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border); margin-bottom: 1rem;">
+                    <span class="label" style="display:block; margin-bottom: 1rem; font-weight: 500;">Check B2B Bulk Delivery Availability</span>
+                    <div style="display:flex; gap:0.5rem; margin-bottom: 0.5rem;">
+                        <div style="position:relative; flex:1;">
+                            <i data-lucide="map-pin" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); width:18px; height:18px; color:var(--color-text-light);"></i>
+                            <input type="text" id="pincodeInput" placeholder="Enter 6-digit Pincode" maxlength="6" style="width:100%; border:1px solid var(--color-border); border-radius:6px; padding:12px 12px 12px 40px; font-family:inherit; font-size:0.95rem; background:transparent; color:inherit;">
+                        </div>
+                        <button onclick="checkPincode()" style="background:var(--color-text); color:var(--color-surface); padding:0 24px; border:none; border-radius:6px; font-weight:600; cursor:pointer; transition: opacity 0.2s;">Verify</button>
+                    </div>
+                    <div id="pincodeResult" style="font-size: 0.85rem; display:none; align-items:flex-start; gap: 8px; margin-top: 1rem; line-height: 1.4;"></div>
+                </div>
+
                 <script>
                     function incrementWholesaleQty() {
                         const input = document.getElementById('wqty');
@@ -71,6 +83,43 @@
                     function addToWholesalePack() {
                         const qty = document.getElementById('wqty').value;
                         window.location.href = "{{ route('wholesale.cart.add', $product->id) }}?quantity=" + qty;
+                    }
+
+                    function checkPincode() {
+                        const input = document.getElementById('pincodeInput').value.trim();
+                        const result = document.getElementById('pincodeResult');
+                        
+                        if(!input || input.length !== 6 || isNaN(input)) {
+                            result.style.display = 'flex';
+                            result.style.color = '#ef4444';
+                            result.innerHTML = '<i data-lucide="x-circle" style="width:18px;height:18px; flex-shrink:0;"></i> <span>Please enter a valid 6-digit pincode.</span>';
+                            if (typeof lucide !== 'undefined') lucide.createIcons();
+                            return;
+                        }
+                        
+                        result.style.display = 'flex';
+                        result.style.color = 'var(--color-text-light)';
+                        result.innerHTML = '<i data-lucide="loader" class="spin" style="width:18px;height:18px; flex-shrink:0;"></i> <span>Verifying B2B freight routes...</span>';
+                        if (typeof lucide !== 'undefined') lucide.createIcons();
+                        
+                        fetch(`/shipping/check-pincode?pincode=${input}&type=wholesale`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    result.style.color = '#22c55e'; // Green
+                                    result.innerHTML = `<i data-lucide="truck" style="width:18px;height:18px; flex-shrink:0;"></i> <span>${data.message}</span>`;
+                                } else {
+                                    result.style.color = '#ef4444'; // Red error
+                                    result.innerHTML = `<i data-lucide="map-pin-off" style="width:18px;height:18px; flex-shrink:0;"></i> <span>${data.message}</span>`;
+                                }
+                                if (typeof lucide !== 'undefined') lucide.createIcons();
+                            })
+                            .catch(error => {
+                                console.error('Error fetching freight options:', error);
+                                result.style.color = '#ef4444';
+                                result.innerHTML = `<i data-lucide="alert-circle" style="width:18px;height:18px; flex-shrink:0;"></i> <span>Unable to verify B2B freight at this time. Please try again.</span>`;
+                                if (typeof lucide !== 'undefined') lucide.createIcons();
+                            });
                     }
                 </script>
             </div>
