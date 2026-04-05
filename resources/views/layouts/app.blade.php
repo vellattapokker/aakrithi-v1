@@ -17,7 +17,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #072821;
+            background-color: #0b3d33;
             background-image: url('{{ asset("images/bg_emerald.png") }}');
             background-blend-mode: overlay;
             background-size: 600px;

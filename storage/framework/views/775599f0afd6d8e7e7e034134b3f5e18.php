@@ -1,11 +1,10 @@
-@extends('layouts.app')
-@section('meta_title', 'Order ' . $order->order_number . ' | Aakrithi')
-@section('meta_description', 'Order details for ' . $order->order_number)
+<?php $__env->startSection('meta_title', 'Order ' . $order->order_number . ' | Aakrithi'); ?>
+<?php $__env->startSection('meta_description', 'Order details for ' . $order->order_number); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="container" style="max-width:800px; margin:4rem auto; padding:0 1.5rem; font-family: var(--font-family);">
     
-    {{-- Success Banner --}}
+    
     <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-top: 5px solid var(--color-accent); border-radius: var(--border-radius); padding: 3rem 2rem; text-align:center; margin-bottom:2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
         <div style="width:70px; height:70px; background:var(--color-secondary); color: var(--color-accent); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1.5rem;">
             <i data-lucide="check" style="width:36px; height:36px;"></i>
@@ -14,12 +13,12 @@
         <p style="color:var(--color-text-light); font-size:1.05rem;">Thank you for shopping with Aakrithi. Your elegance is on its way.</p>
     </div>
 
-    {{-- Order Info --}}
+    
     <div style="background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--border-radius); padding:2rem; margin-bottom:1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
             <div>
                 <p style="color:var(--color-text-light); font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.25rem;">Order Number</p>
-                <p style="font-size:1.5rem; font-weight:700; color:var(--color-accent); letter-spacing:1px;">{{ $order->order_number }}</p>
+                <p style="font-size:1.5rem; font-weight:700; color:var(--color-accent); letter-spacing:1px;"><?php echo e($order->order_number); ?></p>
             </div>
             <div style="text-align:right;">
                 <p style="color:var(--color-text-light); font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:0.5rem;">Status</p>
@@ -29,34 +28,27 @@
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:1.5rem; padding-top:1.5rem; border-top:1px dashed var(--color-border);">
             <div>
                 <p style="color:var(--color-text-light); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.25rem;">Date</p>
-                <p style="font-weight:500; color:var(--color-text);">{{ $order->created_at->format('d M Y, h:i A') }}</p>
+                <p style="font-weight:500; color:var(--color-text);"><?php echo e($order->created_at->format('d M Y, h:i A')); ?></p>
             </div>
             <div>
                 <p style="color:var(--color-text-light); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.25rem;">Payment</p>
-                <p style="font-weight:500; color:var(--color-text); display: flex; align-items: center; gap: 0.5rem;">
-                    {{ $order->payment_method === 'razorpay' ? 'Paid Online' : 'Cash on Delivery' }}
-                    @if($order->payment_status === 'verified')
-                        <span style="display: inline-flex; align-items: center; gap: 4px; color: #16a34a; font-size: 0.7rem; font-weight: 700; background: rgba(22, 163, 74, 0.1); padding: 2px 8px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
-                            <i data-lucide="shield-check" style="width: 12px; height: 12px;"></i> Verified
-                        </span>
-                    @endif
-                </p>
+                <p style="font-weight:500; color:var(--color-text);"><?php echo e($order->payment_method === 'razorpay' ? 'Paid Online' : 'Cash on Delivery'); ?></p>
             </div>
-            @if($order->payment_id)
+            <?php if($order->payment_id): ?>
             <div>
                 <p style="color:var(--color-text-light); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.25rem;">Payment ID</p>
-                <p style="font-weight:500; font-size:0.9rem; color:var(--color-text);">{{ $order->payment_id }}</p>
+                <p style="font-weight:500; font-size:0.9rem; color:var(--color-text);"><?php echo e($order->payment_id); ?></p>
             </div>
-            @endif
+            <?php endif; ?>
         </div>
     </div>
 
-    {{-- Order Tracking Timeline --}}
-    @php
+    
+    <?php
         $statuses = ['confirmed' => 'Order Confirmed', 'processing' => 'Processing', 'shipped' => 'Shipped', 'delivered' => 'Delivered'];
         $currentStatusIndex = array_search(strtolower($order->status), array_keys($statusList = ['confirmed', 'processing', 'shipped', 'delivered']));
         if($currentStatusIndex === false) $currentStatusIndex = 0; // Default to confirmed if unknown
-    @endphp
+    ?>
     
     <style>
         .timeline-container { display: flex; justify-content: space-between; position: relative; width: 100%; padding-bottom: 1rem; }
@@ -80,10 +72,10 @@
         
         <div class="timeline-container">
             <div class="timeline-bg-line"></div>
-            <div class="timeline-active-line" style="width: {{ ($currentStatusIndex / (count($statusList) - 1)) * 75 }}%;"></div>
+            <div class="timeline-active-line" style="width: <?php echo e(($currentStatusIndex / (count($statusList) - 1)) * 75); ?>%;"></div>
             
-            @foreach($statuses as $key => $label)
-            @php 
+            <?php $__currentLoopData = $statuses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php 
                 $stepIndex = $loop->index;
                 $isCompleted = $stepIndex <= $currentStatusIndex;
                 $isActive = $stepIndex === $currentStatusIndex;
@@ -94,67 +86,69 @@
                     'delivered' => 'home',
                     default => 'circle'
                 };
-            @endphp
+            ?>
             <div class="timeline-step">
                 <div class="timeline-icon" style="
-                    background: {{ $isCompleted ? 'var(--color-accent)' : 'var(--color-surface)' }}; 
-                    border: {{ $isCompleted ? '2px solid var(--color-accent)' : '2px solid var(--color-border)' }};
-                    color: {{ $isCompleted ? '#fff' : 'var(--color-text-light)' }};
-                    {{ $isActive ? 'box-shadow: 0 0 0 4px rgba(197, 160, 89, 0.2);' : '' }}">
-                    <i data-lucide="{{ $icon }}"></i>
+                    background: <?php echo e($isCompleted ? 'var(--color-accent)' : 'var(--color-surface)'); ?>; 
+                    border: <?php echo e($isCompleted ? '2px solid var(--color-accent)' : '2px solid var(--color-border)'); ?>;
+                    color: <?php echo e($isCompleted ? '#fff' : 'var(--color-text-light)'); ?>;
+                    <?php echo e($isActive ? 'box-shadow: 0 0 0 4px rgba(197, 160, 89, 0.2);' : ''); ?>">
+                    <i data-lucide="<?php echo e($icon); ?>"></i>
                 </div>
-                <p class="timeline-label" style="font-weight:{{ $isActive ? '700' : '500' }}; color:{{ $isCompleted ? 'var(--color-text)' : 'var(--color-text-light)' }};">{{ $label }}</p>
+                <p class="timeline-label" style="font-weight:<?php echo e($isActive ? '700' : '500'); ?>; color:<?php echo e($isCompleted ? 'var(--color-text)' : 'var(--color-text-light)'); ?>;"><?php echo e($label); ?></p>
             </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 
-    {{-- Items --}}
+    
     <div style="background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--border-radius); padding:2rem; margin-bottom:1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
         <h2 style="font-size:1.25rem; margin-bottom:1.5rem; color:var(--color-text); font-weight:600;">Items Ordered</h2>
-        @foreach($order->items as $id => $item)
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem 0; {{ !$loop->last ? 'border-bottom:1px solid var(--color-border);' : '' }}">
+        <?php $__currentLoopData = $order->items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem 0; <?php echo e(!$loop->last ? 'border-bottom:1px solid var(--color-border);' : ''); ?>">
             <div style="display:flex; align-items:center; gap:1rem;">
-                @if(isset($item['image']))
-                <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}" style="width:60px; height:80px; object-fit:cover; border-radius:4px; border:1px solid var(--color-border);">
-                @endif
+                <?php if(isset($item['image'])): ?>
+                <img src="<?php echo e($item['image']); ?>" alt="<?php echo e($item['name']); ?>" style="width:60px; height:80px; object-fit:cover; border-radius:4px; border:1px solid var(--color-border);">
+                <?php endif; ?>
                 <div>
-                    <p style="font-weight:500; color:var(--color-text); font-size:1.05rem; margin-bottom:0.25rem;">{{ $item['name'] }}</p>
-                    <p style="color:var(--color-text-light); font-size:0.9rem;">Qty: {{ $item['quantity'] }}</p>
+                    <p style="font-weight:500; color:var(--color-text); font-size:1.05rem; margin-bottom:0.25rem;"><?php echo e($item['name']); ?></p>
+                    <p style="color:var(--color-text-light); font-size:0.9rem;">Qty: <?php echo e($item['quantity']); ?></p>
                 </div>
             </div>
-            <p style="font-weight:600; color:var(--color-text); font-size:1.1rem;">₹{{ number_format($item['price'] * $item['quantity']) }}</p>
+            <p style="font-weight:600; color:var(--color-text); font-size:1.1rem;">₹<?php echo e(number_format($item['price'] * $item['quantity'])); ?></p>
         </div>
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         <div style="display:flex; justify-content:space-between; align-items:center; padding-top:1.5rem; margin-top:0.5rem; border-top:2px solid var(--color-border);">
             <p style="font-weight:600; font-size:1.25rem; color:var(--color-text);">Total</p>
-            <p style="font-weight:700; font-size:1.4rem; color:var(--color-accent);">₹{{ number_format($order->total) }}</p>
+            <p style="font-weight:700; font-size:1.4rem; color:var(--color-accent);">₹<?php echo e(number_format($order->total)); ?></p>
         </div>
     </div>
 
-    {{-- Shipping --}}
+    
     <div style="background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--border-radius); padding:2rem; margin-bottom:2.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
         <h2 style="font-size:1.25rem; margin-bottom:1.5rem; color:var(--color-text); font-weight:600;">Shipping Details</h2>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem;">
             <div>
                 <p style="color:var(--color-text-light); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.25rem;">Name</p>
-                <p style="font-weight:500; color:var(--color-text);">{{ $order->customer_name }}</p>
+                <p style="font-weight:500; color:var(--color-text);"><?php echo e($order->customer_name); ?></p>
             </div>
             <div>
                 <p style="color:var(--color-text-light); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.25rem;">Phone</p>
-                <p style="font-weight:500; color:var(--color-text);">{{ $order->customer_phone }}</p>
+                <p style="font-weight:500; color:var(--color-text);"><?php echo e($order->customer_phone); ?></p>
             </div>
             <div style="grid-column: span 2;">
                 <p style="color:var(--color-text-light); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.25rem;">Delivery Address</p>
-                <p style="font-weight:500; color:var(--color-text); line-height:1.6;">{{ $order->shipping_address }}<br>{{ $order->city }}, {{ $order->state }} - {{ $order->pincode }}</p>
+                <p style="font-weight:500; color:var(--color-text); line-height:1.6;"><?php echo e($order->shipping_address); ?><br><?php echo e($order->city); ?>, <?php echo e($order->state); ?> - <?php echo e($order->pincode); ?></p>
             </div>
         </div>
     </div>
 
     <div style="text-align:center;">
-        <a href="{{ route('shop') }}" style="text-decoration:none; display:inline-block; padding:14px 40px; background:var(--color-accent); color:white; border-radius:var(--border-radius); font-weight:600; font-size:1.05rem; letter-spacing:1px; transition: opacity 0.3s ease;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        <a href="<?php echo e(route('shop')); ?>" style="text-decoration:none; display:inline-block; padding:14px 40px; background:var(--color-accent); color:white; border-radius:var(--border-radius); font-weight:600; font-size:1.05rem; letter-spacing:1px; transition: opacity 0.3s ease;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
             CONTINUE SHOPPING
         </a>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\New folder\Git uploads\aakrithi-v1\resources\views/order-details.blade.php ENDPATH**/ ?>

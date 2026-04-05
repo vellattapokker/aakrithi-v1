@@ -3012,3 +3012,9 @@ body.home-page .add-to-cart-btn:hover {
     color: #072821 !important;
     border-color: #FEFEE3 !important;
 }
+
+body.home-page select,
+body.home-page select option {
+    background-color: #0b3d33 !important;
+    color: #FEFEE3 !important;
+}

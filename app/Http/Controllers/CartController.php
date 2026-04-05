@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
@@ -44,10 +46,32 @@ class CartController extends Controller
             return redirect()->route('cart')->with('error', 'Your cart is empty!');
         }
 
-        $razorpayKey = config('services.razorpay.key');
+        $razorpayKey = config('services.razorpay.key') ?? env('RAZORPAY_KEY_ID');
+        $razorpaySecret = config('services.razorpay.secret') ?? env('RAZORPAY_KEY_SECRET');
         $addresses = auth()->check() ? auth()->user()->addresses()->orderBy('is_default', 'desc')->get() : collect([]);
 
-        return view('checkout', compact('cart', 'total', 'razorpayKey', 'addresses'));
+        // Create Razorpay Order Server-Side
+        $razorpayOrderId = null;
+        if ($total > 0 && $razorpayKey && $razorpaySecret) {
+            try {
+                $response = Http::withBasicAuth($razorpayKey, $razorpaySecret)
+                    ->post('https://api.razorpay.com/v1/orders', [
+                        'amount' => $total * 100, // paise
+                        'currency' => 'INR',
+                        'receipt' => 'rcpt_' . uniqid()
+                    ]);
+                if ($response->successful()) {
+                    $razorpayOrderId = $response->json('id');
+                    session()->put('razorpay_order_id', $razorpayOrderId);
+                } else {
+                    Log::error('Razorpay Order Creation Failed', $response->json());
+                }
+            } catch (\Exception $e) {
+                Log::error('Razorpay API Exception: ' . $e->getMessage());
+            }
+        }
+
+        return view('checkout', compact('cart', 'total', 'razorpayKey', 'addresses', 'razorpayOrderId'));
     }
 
     public function add(Request $request, $id)

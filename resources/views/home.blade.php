@@ -10,7 +10,7 @@
     <div class="hero-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(7, 40, 33, 0.4), rgba(7, 40, 33, 0.9));"></div>
     <div class="container h-100 d-flex flex-column align-items-center justify-content-center text-center position-relative" style="z-index: 2;">
         <div class="hero-content reveal-blur">
-            <h1 class="hero-title reveal-up" style="font-family: var(--font-serif); font-size: clamp(2.5rem, 8vw, 5rem); line-height: 1.1; color: #FEFEE3;">Artisanal Heritage, <br>Modern Elegance</h1>
+            <h1 class="hero-title reveal-up" style="font-family: var(--font-serif); font-size: clamp(2.5rem, 8vw, 5rem); line-height: 1.1; color: #FEFEE3; text-transform: uppercase;">it suits you better</h1>
             <p class="hero-description reveal-up reveal-delay-1" style="font-size: 1.2rem; max-width: 600px; margin: 1.5rem auto; opacity: 0.8;">Discover our curated collection of handcrafted ethnic wear and designer apparel.</p>
             <div class="hero-actions reveal-up reveal-delay-2 mt-4">
                 <a href="{{ route('shop') }}" class="btn-primary" style="padding: 1rem 2.5rem; text-decoration: none; border-radius: 40px; display: inline-block;">Explore Collection <i data-lucide="arrow-right"></i></a>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -21,6 +23,32 @@ class OrderController extends Controller
             $total += $details['price'] * $details['quantity'];
         }
 
+        // Verify Razorpay Payment (Server-side via HMAC Signature)
+        $paymentStatus = 'pending';
+        $razorpaySignature = $request->razorpay_signature;
+        $razorpayOrderId = session()->get('razorpay_order_id');
+
+        if ($request->payment_method === 'razorpay' && $request->payment_id && $razorpaySignature && $razorpayOrderId) {
+            $keySecret = env('RAZORPAY_KEY_SECRET');
+            
+            try {
+                // Official Razorpay Signature Verification
+                $generatedSignature = hash_hmac('sha256', $razorpayOrderId . "|" . $request->payment_id, $keySecret);
+                
+                if (hash_equals($generatedSignature, $razorpaySignature)) {
+                    $paymentStatus = 'verified';
+                } else {
+                    Log::error('Razorpay signature verification failed', [
+                        'payment_id' => $request->payment_id,
+                        'order_id' => $razorpayOrderId
+                    ]);
+                }
+            } catch (\Exception $e) {
+                Log::error('Razorpay Verification Exception: ' . $e->getMessage());
+            }
+        }
+
+
         $order = Order::create([
             'order_number' => 'AAK-' . strtoupper(Str::random(8)),
             'customer_name' => $request->customer_name,
@@ -32,6 +60,8 @@ class OrderController extends Controller
             'pincode' => $request->pincode,
             'payment_method' => $request->payment_method,
             'payment_id' => $request->payment_id,
+            'payment_status' => $paymentStatus,
+            'razorpay_signature' => $razorpaySignature,
             'status' => 'confirmed',
             'items' => $cart,
             'total' => $total,
@@ -61,8 +91,9 @@ class OrderController extends Controller
             }
         }
 
-        // Clear the cart
+        // Clear the cart and payment session data
         session()->forget('cart');
+        session()->forget('razorpay_order_id');
 
         return response()->json([
             'success' => true,

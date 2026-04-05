@@ -17,6 +17,8 @@ class Order extends Model
         'pincode',
         'payment_method',
         'payment_id',
+        'payment_status',
+        'razorpay_signature',
         'status',
         'items',
         'total',

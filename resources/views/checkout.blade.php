@@ -375,8 +375,12 @@ document.getElementById('placeOrderBtn').addEventListener('click', function() {
         currency: "INR",
         name: "Aakrithi",
         description: "Order Payment",
+        @if(isset($razorpayOrderId))
+        order_id: "{{ $razorpayOrderId }}", // Server-side validated order id
+        @endif
         handler: function(response) {
             orderData.payment_id = response.razorpay_payment_id;
+            orderData.razorpay_signature = response.razorpay_signature; // Pass signature back
             submitOrder(orderData);
         },
         prefill: {
