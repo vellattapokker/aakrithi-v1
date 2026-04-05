@@ -10,7 +10,6 @@
     
     <div class="container h-100 d-flex flex-column align-items-center justify-content-center text-center">
         <div class="brand-reveal" style="position: relative; z-index: 10;">
-            <img src="<?php echo e(asset('images/logo.png')); ?>" alt="Aakrithi Logo" class="landing-logo reveal-blur" style="width: 100px; margin-bottom: 2rem;">
             <h1 class="landing-title reveal-up" style="font-family: var(--font-serif); font-size: clamp(3rem, 15vw, 8rem); font-weight: 700; letter-spacing: 0.15em; color: #FEFEE3; text-shadow: 0 10px 30px rgba(0,0,0,0.3);">AAKRITHI</h1>
             <p class="landing-subtitle reveal-up reveal-delay-1" style="letter-spacing: 0.6em; text-transform: uppercase; color: var(--color-accent); font-size: 1rem;">Artisanal Heritage • Designer Boutique</p>
         </div>

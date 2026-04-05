@@ -15,9 +15,11 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: var(--color-background);
+            width: 100%;
+            height: 100%;
+            background: #072821;
+            background-image: url('../images/bg_emerald.png');
+            background-size: 600px;
             z-index: 999999;
             display: flex;
             flex-direction: column;
@@ -38,9 +40,13 @@
             margin-bottom: 2rem;
         }
 
-        .loader-logo {
-            width: 70px;
-            height: auto;
+        .loader-logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #FEFEE3;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
             z-index: 2;
             animation: pulse-logo 2s ease-in-out infinite;
         }
@@ -267,9 +273,9 @@
         <div class="loader-brand">
             <div class="loader-ring"></div>
             <div class="loader-ring-inner"></div>
-            <img src="<?php echo e(asset('images/logo.png')); ?>" alt="Aakrithi" class="loader-logo">
+            <div class="loader-logo-text">AAKRITHI</div>
         </div>
-        <div class="loader-text">Aakrithi</div>
+        <div class="loader-text" style="color: rgba(254, 254, 227, 0.4); font-size: 0.6rem; margin-top: -1rem;">EST. 2024</div>
     </div>
 
     
