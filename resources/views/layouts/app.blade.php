@@ -17,8 +17,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #072821;
-            background-image: url('../images/bg_emerald.png');
+            background-color: #072821;
+            background-image: url('{{ asset("images/bg_emerald.png") }}');
+            background-blend-mode: overlay;
             background-size: 600px;
             z-index: 999999;
             display: flex;
@@ -35,14 +36,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 110px;
-            height: 110px;
-            margin-bottom: 2rem;
+            width: 140px;
+            height: 140px;
+            margin-bottom: 2.5rem;
         }
 
         .loader-logo-text {
             font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: #FEFEE3;
             letter-spacing: 0.15em;
@@ -57,7 +58,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            border: 2px solid transparent;
+            border: 4px solid transparent;
             border-top-color: var(--color-accent);
             border-bottom-color: var(--color-accent);
             border-radius: 50%;
@@ -67,11 +68,11 @@
         
         .loader-ring-inner {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            width: calc(100% - 20px);
-            height: calc(100% - 20px);
-            border: 1px solid transparent;
+            top: 12px;
+            left: 12px;
+            width: calc(100% - 24px);
+            height: calc(100% - 24px);
+            border: 2px solid transparent;
             border-left-color: rgba(120, 120, 120, 0.2);
             border-right-color: rgba(120, 120, 120, 0.2);
             border-radius: 50%;
@@ -302,6 +303,7 @@
         </div>
     </div>
 
+    @if(!Route::is('landing'))
     {{-- Navbar --}}
     <nav class="navbar" id="navbar">
         <div class="container navbar-content">
@@ -309,10 +311,10 @@
                 <i data-lucide="menu" id="menuIcon"></i>
             </button>
 
-            <a href="{{ route('landing') }}" class="navbar-logo" style="font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: #FEFEE3; letter-spacing: 0.1em; text-transform: uppercase;">AAKRITHI</a>
+            <a href="{{ route('landing') }}" class="navbar-logo">AAKRITHI</a>
 
             <ul class="navbar-links" id="navLinks">
-                <li class="mobile-nav-logo-item" style="padding: 2rem 0; text-align: center;"><a href="{{ route('landing') }}" style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: #FEFEE3; letter-spacing: 0.1em; text-transform: uppercase;">AAKRITHI</a></li>
+                <li class="mobile-nav-logo-item"><a href="{{ route('landing') }}">AAKRITHI</a></li>
                 <li><a href="{{ route('category', 'apparels') }}"><span class="nav-brand">Aakrithi</span><span class="nav-category">Apparels</span></a></li>
                 <li><a href="{{ route('category', 'kutties') }}"><span class="nav-brand">Aakrithi</span><span class="nav-category">Kutties</span></a></li>
                 <li><a href="{{ route('category', 'decors') }}"><span class="nav-brand">Aakrithi</span><span class="nav-category">Decors</span></a></li>
@@ -351,9 +353,10 @@
         </div>
     </nav>
     <div class="mobile-menu-backdrop" id="menuBackdrop"></div>
+    @endif
 
     {{-- Main Content --}}
-    <main style="padding-top: var(--header-height);">
+    <main style="@if(Route::is('landing')) padding-top: 0; @else padding-top: var(--header-height); @endif">
         @yield('content')
     </main>
 

@@ -235,18 +235,44 @@ img {
     border: none;
     background: transparent;
     -webkit-tap-highlight-color: transparent;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
 }
 
-.navbar-logo img {
-    height: 65px;
-    width: auto;
-    object-fit: contain;
-    border: none;
-    outline: none;
-    transition: transform var(--transition-fast);
+body.home-page .navbar-logo {
+    color: #FEFEE3;
 }
 
-.navbar-logo:hover img {
+.mobile-nav-logo-item {
+    display: none !important;
+}
+
+@media (max-width: 992px) {
+    .mobile-nav-logo-item {
+        display: block !important;
+        padding: 2rem 0;
+        text-align: center;
+    }
+}
+
+.mobile-nav-logo-item a {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+}
+
+body.home-page .mobile-nav-logo-item a {
+    color: #FEFEE3;
+}
+
+.navbar-logo:hover {
     transform: scale(1.05);
 }
 
@@ -2954,4 +2980,35 @@ html, body {
     overflow-x: hidden;
     position: relative;
     width: 100%;
+}
+
+/* Wholesale Refinements */
+.wholesale-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.wholesale-card-link:hover .product-name {
+    color: #50C878; /* Emerald Accent */
+}
+
+/* Global Button Hover Fixes (Ensuring high contrast) */
+.btn-dark:hover, 
+.add-to-cart-btn:hover, 
+.buy-now-btn:hover {
+    background: #072821 !important;
+    color: #FEFEE3 !important;
+    border-color: #072821 !important;
+    transition: all 0.3s ease;
+}
+
+/* Specific Theme Reversals for Emerald Pages */
+body.home-page .btn-primary:hover,
+body.home-page .wholesale-btn:hover,
+body.home-page .add-to-cart-btn:hover {
+    background: #FEFEE3 !important;
+    color: #072821 !important;
+    border-color: #FEFEE3 !important;
 }

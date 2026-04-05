@@ -11,7 +11,7 @@
     <div class="container h-100 d-flex flex-column align-items-center justify-content-center text-center">
         <div class="brand-reveal" style="position: relative; z-index: 10;">
             <h1 class="landing-title reveal-up" style="font-family: var(--font-serif); font-size: clamp(3rem, 15vw, 8rem); font-weight: 700; letter-spacing: 0.15em; color: #FEFEE3; text-shadow: 0 10px 30px rgba(0,0,0,0.3);">AAKRITHI</h1>
-            <p class="landing-subtitle reveal-up reveal-delay-1" style="letter-spacing: 0.6em; text-transform: uppercase; color: var(--color-accent); font-size: 1rem;">Artisanal Heritage • Designer Boutique</p>
+            <p class="landing-subtitle reveal-up reveal-delay-1" style="letter-spacing: 0.6em; text-transform: uppercase; color: #FEFEE3; font-size: 1rem;">Artisanal Heritage • Designer Boutique</p>
         </div>
 
         <div class="portal-container mt-5" style="gap: clamp(2rem, 5vw, 4rem); flex-wrap: wrap; justify-content: center;">

@@ -35,26 +35,25 @@
         <div class="products-grid reveal-up reveal-delay-2" style="gap: 3rem;">
             <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="product-card b2b-card">
-                <div class="product-image-container">
-                    <span class="badge moq-badge">MOQ: 6 Pcs</span>
-                    <?php if($product->badge): ?>
-                    <span class="badge secondary-badge"><?php echo e($product->badge); ?></span>
-                    <?php endif; ?>
-                    <img src="<?php echo e($product->image); ?>" alt="<?php echo e($product->name); ?> - Wholesale <?php echo e($product->category); ?>" class="product-image" loading="lazy">
-                    <div class="product-overlay">
-                        <a href="<?php echo e(route('wholesale.product', $product->slug)); ?>" class="overlay-btn primary">
-                            <i data-lucide="eye"></i> View Details
-                        </a>
+                <a href="<?php echo e(route('wholesale.product', $product->slug)); ?>" class="wholesale-card-link" style="color: inherit; text-decoration: none;">
+                    <div class="product-image-container">
+                        <span class="badge moq-badge">MOQ: 6 Pcs</span>
+                        <?php if($product->badge): ?>
+                        <span class="badge secondary-badge"><?php echo e($product->badge); ?></span>
+                        <?php endif; ?>
+                        <img src="<?php echo e($product->image); ?>" alt="<?php echo e($product->name); ?> - Wholesale <?php echo e($product->category); ?>" class="product-image" loading="lazy">
                     </div>
-                </div>
-                <div class="product-info">
-                    <p class="product-category"><?php echo e($product->category); ?></p>
-                    <h3 class="product-name"><?php echo e($product->name); ?></h3>
-                    <div class="price-wrapper">
-                        <p class="product-price">₹<?php echo e(number_format($product->price)); ?> <span class="price-unit">/ unit</span></p>
-                        <p class="wholesale-note">Retail Price shown. Bulk discount applies at checkout.</p>
+                    <div class="product-info">
+                        <p class="product-category"><?php echo e($product->category); ?></p>
+                        <h3 class="product-name"><?php echo e($product->name); ?></h3>
+                        <div class="price-wrapper">
+                            <p class="product-price">₹<?php echo e(number_format($product->price)); ?> <span class="price-unit">/ unit</span></p>
+                            <p class="wholesale-note">Retail Price shown. Bulk discount applies at checkout.</p>
+                        </div>
                     </div>
-                    <a href="<?php echo e(route('wholesale.product', $product->slug)); ?>" class="btn btn-primary w-100 mt-3" style="text-decoration:none; text-align:center;">
+                </a>
+                <div class="product-actions" style="padding: 0 1.5rem 1.5rem;">
+                    <a href="<?php echo e(route('wholesale.product', $product->slug)); ?>" class="btn btn-primary wholesale-btn w-100" style="text-decoration:none; text-align:center;">
                         Order Wholesale
                     </a>
                 </div>
